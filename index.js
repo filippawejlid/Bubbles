@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
 const utils = require("./utils.js");
+const auth = require("./middlewares/auth");
 
 const app = express();
 

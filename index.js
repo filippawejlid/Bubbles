@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
 const UserModel = require("./models/userModel.js");
-const utils = require("./utils.js");
+const auth = require("./middlewares/auth.js");
 const registerRoutes = require("./routes/register-routes.js");
 const loginRouter = require("./routes/login-routes.js");
 

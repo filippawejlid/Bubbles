@@ -1,7 +1,7 @@
 const express = require("express");
 const UserModel = require("../models/userModel.js");
 const router = express.Router();
-const utils = require("../utils.js");
+const auth = require("../middlewares/auth.js");
 
 router.get("/", (req, res) => {
   res.render("auth/register");
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
       const newUser = new UserModel({
         username,
         email,
-        password: utils.hashPassword(password),
+        password: auth.hashPassword(password),
       });
 
       await newUser.save();

@@ -27,6 +27,24 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use((req, res, next) => {
+  const { token } = req.cookies;
+
+  if (token && jwt.verify(token, process.env.JWTSECRET)) {
+    const tokenData = jwt.decode(token, process.env.JWTSECRET);
+    res.locals.loggedIn = true;
+    res.locals.username = tokenData.username;
+  } else {
+    res.locals.loggedIn = false;
+  }
+
+  next();
+});
+
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
 app.use("/register", registerRoutes);
 app.use("/login", loginRouter);
 

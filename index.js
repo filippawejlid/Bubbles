@@ -5,7 +5,6 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const UserModel = require("./models/userModel.js");
 const { forceAuthorize } = require("./middlewares/auth.js");
 const registerRoutes = require("./routes/register-routes.js");
 const loginRouter = require("./routes/login-routes.js");
@@ -40,6 +39,7 @@ app.use((req, res, next) => {
     const tokenData = jwt.decode(token, process.env.JWTSECRET);
     res.locals.loggedIn = true;
     res.locals.username = tokenData.username;
+    res.locals.id = tokenData.userId;
   } else {
     res.locals.loggedIn = false;
   }

@@ -1,20 +1,33 @@
 <h2>Alla inlägg</h2>
 
-<form action="/home">
+<form action="/home" method="post">
 
-  <input type="text" name="content" placeholder="What's in your bubble?" />
+  <textarea
+    name="content"
+    cols="30"
+    rows="10"
+    placeholder="What's in your bubble?..."
+  ></textarea>
+
   <input type="submit" value="Share" />
 </form>
 
-{{#each posts}}
+{{#each users}}
 
-  <div class="post-container">
-    <p class="content">
-      {{content}}
-    </p>
-    <span class="time">
-      {{time}}
-    </span>
-  </div>
+  <p>
+    {{username}}
+  </p>
+  {{#each posts}}
+
+    <div class="post-container">
+      <p class="content">
+        {{content}}
+      </p>
+      <span class="time">
+        {{formatDate time}}
+      </span>
+    </div>
+
+  {{/each}}
 
 {{/each}}

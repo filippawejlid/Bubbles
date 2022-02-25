@@ -2,10 +2,9 @@ const express = require("express");
 const UserModel = require("../models/userModel.js");
 const router = express.Router();
 const auth = require("../middlewares/auth.js");
+const userControllers = require("../controllers/user-controller");
 
-router.get("/", (req, res) => {
-  res.render("auth/register");
-});
+router.get("/", userControllers.getRegister);
 
 router.post("/", async (req, res) => {
   const { username, email, password, confirmPassword } = req.body;

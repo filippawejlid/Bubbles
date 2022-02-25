@@ -6,9 +6,10 @@ const exphbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const UserModel = require("./models/userModel.js");
-const auth = require("./middlewares/auth.js");
+const { forceAuthorize } = require("./middlewares/auth.js");
 const registerRoutes = require("./routes/register-routes.js");
 const loginRouter = require("./routes/login-routes.js");
+const postRoutes = require("./routes/post-routes");
 
 const app = express();
 
@@ -17,6 +18,12 @@ app.engine(
   exphbs.engine({
     extname: ".hbs",
     defaultLayout: "main",
+    helpers: {
+      formatDate: (time) => {
+        const date = new Date(time);
+        return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+      },
+    },
   })
 );
 
@@ -40,10 +47,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.get("/", forceAuthorize);
 
+app.use("/home", postRoutes);
 app.use("/register", registerRoutes);
 app.use("/login", loginRouter);
 

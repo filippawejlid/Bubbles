@@ -1,5 +1,20 @@
-{{#if loggedIn}}
-  <p>logged in as "placeholder"</p>
-{{else}}
-  <P>Please log in</P>
-{{/if}}
+<h2>Alla inlägg</h2>
+
+<form action="/home">
+
+  <input type="text" name="content" placeholder="What's in your bubble?" />
+  <input type="submit" value="Share" />
+</form>
+
+{{#each posts}}
+
+  <div class="post-container">
+    <p class="content">
+      {{content}}
+    </p>
+    <span class="time">
+      {{time}}
+    </span>
+  </div>
+
+{{/each}}

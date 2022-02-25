@@ -1,4 +1,3 @@
-
 const bcrypt = require("bcryptjs");
 
 const hashPassword = (password) => {
@@ -15,13 +14,10 @@ const forceAuthorize = (req, res, next) => {
   const { token } = req.cookies;
 
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
-    next();
+    res.redirect("/home");
   } else {
-    res.redirect("/");
+    res.redirect("/login");
   }
 };
 
-module.exports = { forceAuthorize,
-                 hashPassword,
-  comparePassword,};
-
+module.exports = { forceAuthorize, hashPassword, comparePassword };

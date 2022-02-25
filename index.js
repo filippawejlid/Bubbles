@@ -5,15 +5,10 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-
-
 const UserModel = require("./models/userModel.js");
 const auth = require("./middlewares/auth.js");
 const registerRoutes = require("./routes/register-routes.js");
 const loginRouter = require("./routes/login-routes.js");
-
-
-
 
 const app = express();
 
@@ -42,7 +37,6 @@ app.use((req, res, next) => {
     res.locals.loggedIn = false;
   }
 
-
   next();
 });
 
@@ -52,11 +46,6 @@ app.get("/", (req, res) => {
 
 app.use("/register", registerRoutes);
 app.use("/login", loginRouter);
-
-=======
-  next();
-});
-
 
 app.listen(8000, () => {
   console.log("http://localhost:8000/");

@@ -7,8 +7,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const UserModel = require("./models/userModel.js");
 const auth = require("./middlewares/auth.js");
-const registerRoutes = require("./routes/register-routes.js");
-const loginRouter = require("./routes/login-routes.js");
+const userRoutes = require("./routes/user-routes.js");
 
 const app = express();
 
@@ -44,8 +43,7 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
-app.use("/register", registerRoutes);
-app.use("/login", loginRouter);
+app.use("/user", userRoutes);
 
 app.listen(8000, () => {
   console.log("http://localhost:8000/");

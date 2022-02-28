@@ -1,5 +1,6 @@
 const PostsModel = require("../models/PostsModel");
 const UserModel = require("../models/userModel");
+const validatePost = require("../utils");
 
 exports.getPosts = async (req, res, next) => {
   const posts = await PostsModel.find()
@@ -15,13 +16,25 @@ exports.postNewPost = async (req, res, next) => {
 
   const post = new PostsModel({ postedBy: username, content });
 
-  await post.save();
+  if (validatePost(post)) {
+    await post.save();
 
-  const postId = post._id;
+    const postId = post._id;
 
-  PostsModel.findOne({ _id: postId })
-    .populate("postedBy")
-    .exec(function (err, post) {});
+    PostsModel.findOne({ _id: postId })
+      .populate("postedBy")
+      .exec(function (err, post) {});
 
-  res.redirect("/home");
+    res.redirect("/home");
+  } else {
+    const posts = await PostsModel.find()
+      .sort([["time", "desc"]])
+      .lean();
+
+    res.render("home", {
+      posts,
+      content: post.content,
+      error: "Du måste skriva något",
+    });
+  }
 };

@@ -1,13 +1,9 @@
 <h2>Redigera inlägg</h2>
 
 <div class="edit-post">
+  {{error}}
   <form action="/user/edit-post/{{_id}}" method="post">
-    <textarea
-      name="content"
-      cols="30"
-      rows="10"
-      placeholder="{{content}}"
-    >{{content}}</textarea>
+    <textarea name="content" cols="30" rows="10">{{content}}</textarea>
     <input type="submit" value="Spara" />
   </form>
 </div>

@@ -1,16 +1,11 @@
-const bcrypt = require("bcryptjs");
+function validatePost(post) {
+  let valid = true;
 
-const hashPassword = (password) => {
-  const hashValue = bcrypt.hashSync(password, 8);
-  return hashValue;
-};
+  valid = valid && post.content;
 
-const comparePassword = (password, hash) => {
-  const correct = bcrypt.compareSync(password, hash);
-  return correct;
-};
+  valid = valid && post.content.length > 0;
 
-module.exports = {
-  hashPassword,
-  comparePassword,
-};
+  return valid;
+}
+
+module.exports = validatePost;

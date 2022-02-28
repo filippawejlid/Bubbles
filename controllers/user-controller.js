@@ -3,6 +3,7 @@ const UserModel = require("../models/userModel.js");
 const router = express.Router();
 const auth = require("../middlewares/auth.js");
 const PostsModel = require("../models/PostsModel.js");
+const validatePost = require("../utils");
 
 exports.getRegister = (req, res, next) => {
   res.render("auth/register");
@@ -36,19 +37,27 @@ exports.getEditPost = async (req, res, next) => {
   res.render("user/edit-post", post);
 };
 
-exports.postEditPost = (req, res, next) => {
+exports.postEditPost = async (req, res, next) => {
   const id = req.params.id;
+
+  const originalPost = await PostsModel.findOne({ _id: id });
 
   const post = {
     content: req.body.content,
     time: Date.now(),
   };
 
-  PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
-    console.log(result);
-
-    res.redirect("/");
-  });
+  if (validatePost(post)) {
+    PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
+      res.redirect("/user");
+    });
+  } else {
+    res.render("user/edit-post", {
+      error: "Du måste skriva något",
+      content: originalPost.content,
+      _id: originalPost._id,
+    });
+  }
 };
 
 exports.postDeletePost = async (req, res, next) => {

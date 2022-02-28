@@ -1,13 +1,13 @@
 <h2>Alla inlägg</h2>
 
 <form action="/home" method="post">
-
+  <p> {{error}} </p>
   <textarea
     name="content"
     cols="30"
     rows="10"
     placeholder="What's in your bubble?..."
-  ></textarea>
+  >{{content}}</textarea>
 
   <input type="submit" value="Share" />
 </form>

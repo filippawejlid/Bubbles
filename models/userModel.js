@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     {
       content: { type: String, required: true },
       time: { type: Number, default: Date.now },
+      author: { type: String, required: true },
     },
   ],
 });

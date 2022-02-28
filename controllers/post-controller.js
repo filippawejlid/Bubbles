@@ -5,16 +5,16 @@ exports.getPosts = async (req, res, next) => {
     .sort([["time", "desc"]])
     .lean();
 
-  const users = [];
+  const posts = [];
 
   for (const item of allUsers) {
-    console.log(item + "hej");
-    if (item.posts.length > 0) {
-      users.push(item);
+    for (const post of item.posts) {
+      posts.push(post);
     }
   }
+  console.log(posts);
 
-  res.render("home", { users });
+  res.render("home", { posts });
 };
 
 exports.postNewPost = async (req, res, next) => {
@@ -25,7 +25,7 @@ exports.postNewPost = async (req, res, next) => {
   UserModel.findByIdAndUpdate(
     id,
     {
-      $push: { posts: { content } },
+      $push: { posts: { content, author: res.locals.username } },
     },
     (err, result) => {
       res.redirect("home");

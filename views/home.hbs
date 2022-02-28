@@ -12,22 +12,16 @@
   <input type="submit" value="Share" />
 </form>
 
-{{#each users}}
+{{#each posts}}
 
-  <p>
-    {{username}}
-  </p>
-  {{#each posts}}
-
-    <div class="post-container">
-      <p class="content">
-        {{content}}
-      </p>
-      <span class="time">
-        {{formatDate time}}
-      </span>
-    </div>
-
-  {{/each}}
+  <h3> {{author}} </h3>
+  <div class="post-container">
+    <p class="content">
+      {{content}}
+    </p>
+    <span class="time">
+      {{formatDate time}}
+    </span>
+  </div>
 
 {{/each}}

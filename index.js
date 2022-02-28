@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 app.get("/", forceAuthorize);
 
 app.use("/user", userRoutes);
-app.use("/home", postRoutes);
+app.use("/home", forceAuthorize, postRoutes);
 
 app.listen(8000, () => {
   console.log("http://localhost:8000/");

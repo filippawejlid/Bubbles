@@ -17,7 +17,7 @@ const forceAuthorize = (req, res, next) => {
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
     res.redirect("/home");
   } else {
-    res.redirect("/login");
+    res.redirect("/user/login");
   }
 };
 

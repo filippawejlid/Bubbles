@@ -1,34 +1,27 @@
+const PostsModel = require("../models/PostsModel");
 const UserModel = require("../models/userModel");
 
 exports.getPosts = async (req, res, next) => {
-  const allUsers = await UserModel.find()
+  const posts = await PostsModel.find()
     .sort([["time", "desc"]])
     .lean();
-
-  const posts = [];
-
-  for (const item of allUsers) {
-    for (const post of item.posts) {
-      posts.push(post);
-    }
-  }
-  console.log(posts);
 
   res.render("home", { posts });
 };
 
 exports.postNewPost = async (req, res, next) => {
+  const username = res.locals.username;
   const content = req.body.content;
 
-  const id = res.locals.id;
+  const post = new PostsModel({ postedBy: username, content });
 
-  UserModel.findByIdAndUpdate(
-    id,
-    {
-      $push: { posts: { content, author: res.locals.username } },
-    },
-    (err, result) => {
-      res.redirect("home");
-    }
-  );
+  await post.save();
+
+  const postId = post._id;
+
+  PostsModel.findOne({ _id: postId })
+    .populate("postedBy")
+    .exec(function (err, post) {});
+
+  res.redirect("/home");
 };

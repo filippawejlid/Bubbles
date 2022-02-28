@@ -4,6 +4,8 @@ const router = express.Router();
 const auth = require("../middlewares/auth.js");
 const jwt = require("jsonwebtoken");
 
+const userController = require("../controllers/user-controller");
+
 router.get("/register", (req, res) => {
   res.render("auth/register");
 });
@@ -49,5 +51,13 @@ router.post("/login", (req, res) => {
     }
   });
 });
+
+router.get("/", userController.getUserPage);
+
+router.get("/edit-post/:id", userController.getEditPost);
+
+router.post("/edit-post/:id", userController.postEditPost);
+
+router.post("/delete-post/:id", userController.postDeletePost);
 
 module.exports = router;

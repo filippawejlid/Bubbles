@@ -1,0 +1,21 @@
+<h2>
+  {{username}}
+</h2>
+
+{{#each userPosts}}
+
+  <div>
+    <p>
+      {{formatDate time}}
+    </p>
+    <p> {{content}} </p>
+  </div>
+
+  <div class="buttons">
+    <a href="/user/edit-post/{{_id}}">Edit bubble</a>
+    <form action="/user/delete-post/{{_id}}" method="post">
+      <input type="submit" value="Delete bubble" />
+    </form>
+  </div>
+
+{{/each}}

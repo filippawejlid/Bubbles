@@ -4,6 +4,13 @@ const userSchema = new mongoose.Schema({
   username: { type: String },
   email: { type: String },
   password: { type: String },
+  posts: [
+    {
+      content: { type: String, required: true },
+      time: { type: Number, default: Date.now },
+      author: { type: String, required: true },
+    },
+  ],
 });
 
 const UserModel = mongoose.model("Users", userSchema);

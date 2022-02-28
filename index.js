@@ -5,9 +5,10 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const UserModel = require("./models/userModel.js");
-const auth = require("./middlewares/auth.js");
+const { forceAuthorize } = require("./middlewares/auth.js");
+
 const userRoutes = require("./routes/user-routes.js");
+const postRoutes = require("./routes/post-routes");
 
 const app = express();
 
@@ -16,6 +17,12 @@ app.engine(
   exphbs.engine({
     extname: ".hbs",
     defaultLayout: "main",
+    helpers: {
+      formatDate: (time) => {
+        const date = new Date(time);
+        return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+      },
+    },
   })
 );
 
@@ -32,6 +39,7 @@ app.use((req, res, next) => {
     const tokenData = jwt.decode(token, process.env.JWTSECRET);
     res.locals.loggedIn = true;
     res.locals.username = tokenData.username;
+    res.locals.id = tokenData.userId;
   } else {
     res.locals.loggedIn = false;
   }
@@ -39,11 +47,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.get("/", forceAuthorize);
 
 app.use("/user", userRoutes);
+app.use("/home", postRoutes);
 
 app.listen(8000, () => {
   console.log("http://localhost:8000/");

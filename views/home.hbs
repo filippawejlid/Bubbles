@@ -25,25 +25,7 @@
     <span class="time">
       {{formatDate time}}
     </span>
-    <form action="/comment" method="post">
-      <input type="text" name="text" />
-      <input type="submit" value="Comment" />
-    </form>
+    <a href="/home/posts/{{_id}}">Enlarge</a>
   </div>
-
-  {{#each comments}}
-    <h3>
-      {{postedBy.username}}
-    </h3>
-
-    <div class="post-container">
-      <p class="content">
-        {{content}}
-      </p>
-      <span class="time">
-        {{formatDate time}}
-      </span>
-    </div>
-  {{/each}}
 
 {{/each}}

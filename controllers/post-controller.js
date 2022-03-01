@@ -13,6 +13,14 @@ exports.getPosts = async (req, res, next) => {
   res.render("home", { posts });
 };
 
+exports.getPost = async (req, res, next) => {
+  const post = await PostsModel.findById(req.params.id).populate("postedBy");
+
+  console.log(post);
+
+  res.render("single-post", post);
+};
+
 exports.postNewPost = async (req, res, next) => {
   const userId = res.locals.id;
   const content = req.body.content;

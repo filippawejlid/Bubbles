@@ -3,12 +3,13 @@ const UserModel = require("../models/userModel.js");
 const validatePost = require("../utils.js");
 
 exports.postNewComment = async (req, res, next) => {
-  const username = res.locals.username;
+  const userId = res.locals.id;
   const commentContent = req.body.text;
 
-  const comment = new CommentsModel({ postedBy: username, commentContent });
+  const comment = new CommentsModel({ postedBy: userId, commentContent });
 
   if (validatePost(comment)) {
+    console.log(comment);
     await comment.save();
 
     const commentId = comment._id;

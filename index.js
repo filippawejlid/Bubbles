@@ -9,6 +9,7 @@ const { forceAuthorize } = require("./middlewares/auth.js");
 
 const userRoutes = require("./routes/user-routes.js");
 const postRoutes = require("./routes/post-routes");
+const commentRoutes = require("./routes/comments-routes.js");
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 app.get("/", forceAuthorize);
 
 app.use("/home", postRoutes);
+app.use("/home", commentRoutes);
 app.use("/user", userRoutes);
 
 app.use("/", (req, res) => {

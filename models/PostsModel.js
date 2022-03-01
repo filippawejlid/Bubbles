@@ -8,7 +8,6 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     content: { type: String, required: true },
-    time: { type: Number, default: Date.now },
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,

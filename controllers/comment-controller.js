@@ -1,5 +1,5 @@
 const CommentsModel = require("../models/CommentsModel.js");
-const UserModel = require("../models/userModel.js");
+const UserModel = require("../models/UserModel.js");
 const validatePost = require("../utils.js");
 
 exports.postNewComment = async (req, res, next) => {

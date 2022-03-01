@@ -1,0 +1,15 @@
+<h2>Redigera Användare</h2>
+
+<div class="edit-post">
+  {{error}}
+  <form action="/user/settings" method="post">
+    <input
+      type="text"
+      name="username"
+      value="{{username}}"
+      placeholder="Username"
+    />
+    <input type="email" name="email" value="{{email}}" placeholder="Email" />
+    <input type="submit" value="Save changes" />
+  </form>
+</div>

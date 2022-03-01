@@ -18,14 +18,14 @@
     {{postedBy.username}}
   </h3>
 
-  <img src="{{imageUrl}}" alt="Picture of {{postedBy}}" />
+  <img src="{{postedBy.imageUrl}}" alt="Picture of {{postedBy.username}}" />
 
   <div class="post-container">
     <p class="content">
       {{content}}
     </p>
     <span class="time">
-      {{formatDate time}}
+      {{formatDate updatedAt}}
     </span>
     <form action="/comment" method="post">
       <input type="text" name="text" />

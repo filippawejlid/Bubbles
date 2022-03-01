@@ -1,6 +1,6 @@
 const PostsModel = require("../models/PostsModel");
 const UserModel = require("../models/userModel");
-const validatePost = require("../utils");
+const { validatePost } = require("../utils");
 
 exports.getPosts = async (req, res, next) => {
   const posts = await PostsModel.find()

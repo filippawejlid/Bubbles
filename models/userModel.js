@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const fs = require("fs");
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
@@ -10,6 +11,10 @@ const userSchema = new mongoose.Schema({
       ref: "Posts",
     },
   ],
+  imageUrl: {
+    type: String,
+    default: "/images/avatar.png",
+  },
 });
 
 const UserModel = mongoose.model("Users", userSchema);

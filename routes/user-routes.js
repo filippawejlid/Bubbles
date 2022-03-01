@@ -5,6 +5,7 @@ const auth = require("../middlewares/auth.js");
 const jwt = require("jsonwebtoken");
 
 const userController = require("../controllers/user-controller");
+const { getUniqueFilename } = require("../utils");
 
 router.get("/register", (req, res) => {
   res.render("auth/register");
@@ -24,9 +25,16 @@ router.post("/register", async (req, res) => {
         email,
         password: auth.hashPassword(password),
       });
+      if (req.body.image) {
+        const image = req.files.image;
+        const filename = getUniqueFilename(image.name);
+        const uploadPath = __dirname + "/public/uploads/" + filename;
+        await image.mv(uploadPath);
+
+        newUser.imageUrl = "/uploads/" + filename;
+      }
 
       await newUser.save();
-
       res.sendStatus(200);
     }
   });

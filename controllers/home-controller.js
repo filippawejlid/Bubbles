@@ -8,8 +8,6 @@ exports.getPosts = async (req, res, next) => {
     .sort([["time", "desc"]])
     .lean();
 
-  console.log(posts);
-
   res.render("home", { posts });
 };
 

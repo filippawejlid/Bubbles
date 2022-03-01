@@ -57,10 +57,6 @@ exports.postLogin = (req, res, next) => {
   });
 };
 
-exports.getRegister = (req, res, next) => {
-  res.render("auth/register");
-};
-
 exports.getUserPage = async (req, res, next) => {
   const id = res.locals.id;
 
@@ -183,6 +179,15 @@ exports.postEditEmail = async (req, res, next) => {
 };
 
 exports.postDeleteUser = async (req, res, next) => {
+  const id = res.locals.id;
+  const posts = await PostsModel.find();
+
+  posts.forEach((post) => {
+    if (post.postedBy == id.toString()) {
+      PostsModel.deleteOne({ _id: post._id }, (err, result) => {});
+    }
+  });
+
   UserModel.deleteOne({ _id: res.locals.id }, (err, result) => {
     res.cookie("token", "", { maxAge: 0 });
 

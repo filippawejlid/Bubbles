@@ -1,9 +1,20 @@
-<h2>Login</h2>
+<div class="auth">
 
-<form action="/user/login" method="post">
-  <input type="text" name="username" placeholder="Username" />
-  <br />
-  <input type="text" name="password" placeholder="Password" />
-  <br />
-  <input type="submit" value="Login" />
-</form>
+  <div class="auth__form-wrapper">
+    <h2>Login</h2>
+
+    <form class="auth-form" action="/user/login" method="post">
+      <div class="form-group">
+        <input class="auth-input" type="text" name="username" />
+        <span class="auth-label">Username</span>
+      </div>
+      <div class="form-group">
+        <input class="auth-input" type="password" name="password" />
+        <span class="auth-label">Password</span>
+      </div>
+      <button class="auth-btn" type="submit">Login</button>
+
+    </form>
+  </div>
+
+</div>

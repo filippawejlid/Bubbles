@@ -1,13 +1,32 @@
-<h2>Register</h2>
+<div class="auth">
+  <div class="auth__form-wrapper">
 
-<form action="/user/register" method="post">
-  <input type="text" name="username" placeholder="Username" />
-  <br />
-  <input type="text" name="email" placeholder="Email" />
-  <br />
-  <input type="text" name="password" placeholder="Password" />
-  <br />
-  <input type="text" name="confirmPassword" placeholder="Repeat password" />
-  <br />
-  <input type="submit" value="Register" />
-</form>
+    <h2>Register</h2>
+
+    <form class="auth-form" action="/user/register" method="post">
+      <div class="auth-form__wrapper">
+
+        <div class="form-group">
+          <input class="auth-input" type="text" name="username" />
+          <span class="auth-label">Username</span>
+        </div>
+        <div class="form-group">
+          <input class="auth-input" type="email" name="email" />
+          <span class="auth-label">Email</span>
+        </div>
+      </div>
+      <div class="auth-form__wrapper">
+
+        <div class="form-group">
+          <input class="auth-input" type="password" name="password" />
+          <span class="auth-label">Password</span>
+        </div>
+        <div class="form-group">
+          <input class="auth-input" type="password" name="confirmPassword" />
+          <span class="auth-label">Confirm Password</span>
+        </div>
+      </div>
+      <button class="auth-btn" type="submit">Register</button>
+    </form>
+  </div>
+</div>

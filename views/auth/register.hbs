@@ -1,6 +1,11 @@
 <h2>Register</h2>
 
-<form action="/user/register" method="post">
+<form
+  action="/user/register"
+  method="post"
+  method="post"
+  enctype="multipart/form-data"
+>
   <input type="text" name="username" placeholder="Username" />
   <br />
   <input type="text" name="email" placeholder="Email" />
@@ -9,5 +14,9 @@
   <br />
   <input type="text" name="confirmPassword" placeholder="Repeat password" />
   <br />
+  <fieldset>
+    <label for="image">Add a picture of yourself!</label><br />
+    <input type="file" name="image" id="image" />
+  </fieldset>
   <input type="submit" value="Register" />
 </form>

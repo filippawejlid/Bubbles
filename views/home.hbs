@@ -1,13 +1,40 @@
-<h2>Alla inlägg</h2>
+<div class="home">
+  <div class="form-wrapper">
 
-<form action="/home" method="post">
-  <p> {{error}} </p>
-  <textarea
-    name="content"
-    cols="30"
-    rows="10"
-    placeholder="What's in your bubble?..."
-  >{{content}}</textarea>
+    <form class="home-form" action="/home" method="post">
+      <p class="home-form__error"> {{error}} </p>
+      <textarea
+        class="home-form__textArea"
+        name="content"
+        placeholder="What's in your bubble?..."
+      >{{content}}</textarea>
+
+
+      <button class="home-form__btn" type="submit">Share</button>
+    </form>
+  </div>
+
+  <section class="post-section">
+    {{#each posts}}
+      <div class="post">
+        <div class="post__info">
+          <div class="post__info__author">
+            <img
+              src="https://raw.githubusercontent.com/filippawejlid/Bubbles/develop/public/images/avatar.png"
+              alt=""
+            />
+            <h3 class="author">{{postedBy}}</h3>
+          </div>
+          <span class="time">{{formatDate time}}</span>
+        </div>
+        <div class="post__content">
+          <p>{{content}}</p>
+        </div>
+      </div>
+
+    {{/each}}
+  </section>
+</div>
 
   <input type="submit" value="Share" />
 </form>

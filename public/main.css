@@ -116,7 +116,8 @@ nav > a:hover::before {
   transition: all 0.2s ease;
 }
 
-.auth-input:focus + .auth-label {
+.auth-input:focus + .auth-label,
+.auth-input:not(:placeholder-shown) + .auth-label {
   top: -20px;
   font-size: 12px;
 }

@@ -9,12 +9,12 @@
         placeholder="What's in your bubble?..."
       >{{content}}</textarea>
 
-
       <button class="home-form__btn" type="submit">Share</button>
     </form>
   </div>
 
   <section class="post-section">
+
     {{#each posts}}
       <div class="post">
         <div class="post__info">
@@ -23,9 +23,9 @@
               src="https://raw.githubusercontent.com/filippawejlid/Bubbles/develop/public/images/avatar.png"
               alt=""
             />
-            <h3 class="author">{{postedBy}}</h3>
+            <h3 class="author">{{postedBy.username}}</h3>
           </div>
-          <span class="time">{{formatDate time}}</span>
+          <span class="time">{{formatDate createdAt}}</span>
         </div>
         <div class="post__content">
           <p>{{content}}</p>
@@ -36,7 +36,7 @@
   </section>
 </div>
 
-  <input type="submit" value="Share" />
+{{!-- <input type="submit" value="Share" />
 </form>
 
 {{#each posts}}
@@ -75,4 +75,4 @@
     </div>
   {{/each}}
 
-{{/each}}
+{{/each}} --}}

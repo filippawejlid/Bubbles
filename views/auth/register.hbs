@@ -41,11 +41,19 @@
           <span class="auth-label">Confirm password</span>
         </div>
       </div>
+      {{! <fieldset class="auth-fieldset">
+        <label for="image">Add a picture of yourself!</label>
+        <input type="file" name="image" id="image" />
+      </fieldset> }}
+      <div class="auth-file-wrapper">
+
+      </div>
       <button class="auth-btn" type="submit">Register</button>
     </form>
   </div>
 </div>
-<h2>Register</h2>
+
+{{! <h2>Register</h2>
 
 <form action="/user/register" method="post" enctype="multipart/form-data">
   <input type="text" name="username" placeholder="Username" />
@@ -61,4 +69,4 @@
     <input type="file" name="image" id="image" />
   </fieldset>
   <input type="submit" value="Register" />
-</form>
+</form> }}

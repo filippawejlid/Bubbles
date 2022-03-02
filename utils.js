@@ -8,4 +8,17 @@ function validatePost(post) {
   return valid;
 }
 
-module.exports = validatePost;
+function validateComment(comment) {
+  let valid = true;
+
+  valid = valid && comment.text;
+
+  valid = valid && comment.text.length > 0;
+
+  return valid;
+}
+
+module.exports = {
+  validateComment,
+  validatePost,
+};

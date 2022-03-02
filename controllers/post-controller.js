@@ -1,5 +1,6 @@
 const PostsModel = require("../models/PostsModel");
 const UserModel = require("../models/userModel");
+const CommentsModel = require("../models/CommentsModel.js");
 const validatePost = require("../utils");
 
 exports.getPosts = async (req, res, next) => {
@@ -14,11 +15,21 @@ exports.getPosts = async (req, res, next) => {
 };
 
 exports.getPost = async (req, res, next) => {
-  const post = await PostsModel.findById(req.params.id).populate("postedBy");
+  const postId = req.params.id;
+  const post = await PostsModel.findById(postId)
+    .populate("postedBy")
+    .populate("comments");
+
+  const comments = await CommentsModel.find({ originalPost: postId })
+    .sort([["createdAt", "desc"]])
+    .lean();
 
   console.log(post);
-
-  res.render("single-post", post);
+  res.render("single-post", {
+    content: post.content,
+    createdAt: post.createdAt,
+    comments,
+  });
 };
 
 exports.postNewPost = async (req, res, next) => {

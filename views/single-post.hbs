@@ -9,4 +9,16 @@
   <span class="time">
     {{formatDate createdAt}}
   </span>
+  <form method="post">
+    <input type="text" name="text" placeholder="Comment..." />
+    <input type="submit" value="Add comment" />
+  </form>
+</div>
+<div class="comment-container">
+  <h3>Kommentarer</h3>
+  {{#each comments}}
+    <p class="text">
+      {{text}}
+    </p>
+  {{/each}}
 </div>

@@ -50,14 +50,14 @@
   <button
     type="button"
     class="btn btn-outline-danger"
-    data-toggle="modal"
-    data-target="#deleteModal"
+    data-bs-toggle="modal"
+    data-bs-target="#deleteModal"
   >
     Delete user</button>
 </div>
 
 <div
-  {{! class="modal fade" }}
+  class="modal fade"
   id="deleteModal"
   tabindex="-1"
   role="dialog"
@@ -85,7 +85,7 @@
         <button
           type="button"
           class="btn btn-secondary"
-          data-dismiss="modal"
+          data-bs-dismiss="modal"
         >Close</button>
         <form action="/user/settings/delete" method="post">
           <input class="btn btn-outline-danger" type="submit" value="Delete" />

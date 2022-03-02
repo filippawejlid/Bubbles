@@ -15,7 +15,7 @@ exports.postNewPost = async (req, res, next) => {
   const userId = res.locals.id;
   const content = req.body.content;
 
-  const post = new PostsModel({ postedBy: userId, content });
+  const post = new PostsModel({ postedBy: userId, content: content.trim() });
 
   if (validatePost(post)) {
     await post.save();
@@ -25,12 +25,13 @@ exports.postNewPost = async (req, res, next) => {
     PostsModel.findOne({ _id: postId })
       .populate("postedBy")
       .exec(function (err, post) {
-        console.log("Post log:" + post);
+        const content = post.content.trim();
       });
 
     res.redirect("/home");
   } else {
     const posts = await PostsModel.find()
+      .populate("postedBy")
       .sort([["time", "desc"]])
       .lean();
 

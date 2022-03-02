@@ -13,11 +13,12 @@
             name="username"
             placeholder=" "
           />
-          <span class="auth-label">Username</span>
+          <span class="auth-label"><i class="fa-solid fa-user"></i>
+            Username</span>
         </div>
         <div class="form-group">
           <input class="auth-input" type="email" name="email" placeholder=" " />
-          <span class="auth-label">Email</span>
+          <span class="auth-label"><i class="fa-solid fa-at"></i> Email</span>
         </div>
       </div>
       <div class="auth-form__wrapper">
@@ -29,7 +30,8 @@
             name="password"
             placeholder=" "
           />
-          <span class="auth-label">Password</span>
+          <span class="auth-label"><i class="fa-solid fa-lock"></i>
+            Password</span>
         </div>
         <div class="form-group">
           <input
@@ -38,13 +40,22 @@
             name="confirmPassword"
             placeholder=" "
           />
-          <span class="auth-label">Confirm password</span>
+          <span class="auth-label"><i class="fa-solid fa-lock"></i>
+            Confirm password</span>
         </div>
       </div>
-      {{! <fieldset class="auth-fieldset">
-        <label for="image">Add a picture of yourself!</label>
-        <input type="file" name="image" id="image" />
-      </fieldset> }}
+      <fieldset class="auth-fieldset auth-input">
+        <label for="image">
+          <div class="auth-img">
+            <img
+              src="{{pictures.anon}}"
+              id="output"
+              alt="Picture of anonymous"
+            />
+          </div>
+          Add a profile picture</label>
+        <input type="file" name="image" id="image" onchange="loadFile(event)" />
+      </fieldset>
       <div class="auth-file-wrapper">
 
       </div>

@@ -5,7 +5,11 @@ const { validatePost, getUniqueFilename } = require("../utils");
 const jwt = require("jsonwebtoken");
 
 exports.getRegister = (req, res, next) => {
-  res.render("auth/register");
+  const pictures = {
+    pic: req.files,
+    anon: "/images/avatar.png",
+  };
+  res.render("auth/register", { pictures });
 };
 
 exports.postRegister = (req, res, next) => {

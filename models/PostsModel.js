@@ -1,15 +1,22 @@
 const mongoose = require("mongoose");
 
-const postSchema = new mongoose.Schema({
-  postedBy: {
-    type: mongoose.Schema.Types.String,
-    ref: "Users",
-    required: true,
+const postSchema = new mongoose.Schema(
+  {
+    postedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users",
+      required: true,
+    },
+    content: { type: String, required: true },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comments",
+      },
+    ],
   },
-  content: { type: String, required: true },
-  time: { type: Number, default: Date.now },
-  comments: [{ body: "string", by: mongoose.Schema.Types.ObjectId }],
-});
+  { timestamps: true }
+);
 
 const PostsModel = mongoose.model("Posts", postSchema);
 

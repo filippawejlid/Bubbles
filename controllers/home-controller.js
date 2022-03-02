@@ -1,9 +1,10 @@
 const PostsModel = require("../models/PostsModel");
-const UserModel = require("../models/userModel");
-const validatePost = require("../utils");
+const UserModel = require("../models/UserModel");
+const { validatePost } = require("../utils");
 
 exports.getPosts = async (req, res, next) => {
   const posts = await PostsModel.find()
+    .populate("postedBy")
     .sort([["time", "desc"]])
     .lean();
 
@@ -11,10 +12,10 @@ exports.getPosts = async (req, res, next) => {
 };
 
 exports.postNewPost = async (req, res, next) => {
-  const username = res.locals.username;
+  const userId = res.locals.id;
   const content = req.body.content;
 
-  const post = new PostsModel({ postedBy: username, content });
+  const post = new PostsModel({ postedBy: userId, content });
 
   if (validatePost(post)) {
     await post.save();
@@ -23,7 +24,9 @@ exports.postNewPost = async (req, res, next) => {
 
     PostsModel.findOne({ _id: postId })
       .populate("postedBy")
-      .exec(function (err, post) {});
+      .exec(function (err, post) {
+        console.log("Post log:" + post);
+      });
 
     res.redirect("/home");
   } else {

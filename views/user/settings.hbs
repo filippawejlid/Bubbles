@@ -1,0 +1,96 @@
+<h2>Settings</h2>
+
+<div class="change-image">
+
+  <h3>Change your profile picture</h3>
+  <form
+    action="/user/settings/change-image"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <fieldset>
+      {{!-- <img src="{{imageUrl}}" alt="picture of {{username}}" /> --}}
+      <input type="file" name="image" id="image" />
+    </fieldset>
+
+    <input type="submit" value="Save" />
+  </form>
+
+</div>
+
+<div class="edit-user">
+
+  <h3>Edit username</h3>
+
+  <form action="/user/settings/edit-username" method="post">
+    {{errorUsername}}
+    <input
+      type="text"
+      name="username"
+      value="{{username}}"
+      placeholder="Username"
+    />
+
+    <input type="submit" value="Save changes" />
+  </form>
+</div>
+
+<div class="change-email">
+  <h3>Edit email</h3>
+
+  <form action="/user/settings/edit-email" method="post">
+    {{errorEmail}}
+    <input type="email" name="email" value="{{email}}" placeholder="Email" />
+
+    <input type="submit" value="Save changes" />
+  </form>
+</div>
+
+<div class="delete-user">
+  <button
+    type="button"
+    class="btn btn-outline-danger"
+    data-toggle="modal"
+    data-target="#deleteModal"
+  >
+    Delete user</button>
+</div>
+
+<div
+  {{! class="modal fade" }}
+  id="deleteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Deleting
+          {{username}}</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete your account?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Close</button>
+        <form action="/user/settings/delete" method="post">
+          <input class="btn btn-outline-danger" type="submit" value="Delete" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

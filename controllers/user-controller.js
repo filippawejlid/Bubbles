@@ -26,6 +26,7 @@ exports.postRegister = (req, res, next) => {
         email,
         password: auth.hashPassword(password),
       });
+      console.log(req.files);
       if (req.files && req.files.image) {
         const image = req.files.image;
         const filename = getUniqueFilename(image.name);
@@ -197,4 +198,9 @@ exports.postDeleteUser = async (req, res, next) => {
 
     res.redirect("/");
   });
+};
+
+exports.getLogout = (req, res) => {
+  res.cookie("token", "", { maxAge: 0 });
+  res.redirect("/");
 };

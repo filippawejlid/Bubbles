@@ -3,7 +3,12 @@
 
     <h2>Register</h2>
 
-    <form class="auth-form" action="/user/register" method="post">
+    <form
+      class="auth-form"
+      action="/user/register"
+      method="post"
+      enctype="multipart/form-data"
+    >
       <div class="auth-form__wrapper">
 
         <div class="form-group">
@@ -56,28 +61,10 @@
           Add a profile picture</label>
         <input type="file" name="image" id="image" onchange="loadFile(event)" />
       </fieldset>
-      <div class="auth-file-wrapper">
+      {{! <div class="auth-file-wrapper">
 
-      </div>
+      </div> }}
       <button class="auth-btn" type="submit">Register</button>
     </form>
   </div>
 </div>
-
-{{! <h2>Register</h2>
-
-<form action="/user/register" method="post" enctype="multipart/form-data">
-  <input type="text" name="username" placeholder="Username" />
-  <br />
-  <input type="text" name="email" placeholder="Email" />
-  <br />
-  <input type="text" name="password" placeholder="Password" />
-  <br />
-  <input type="text" name="confirmPassword" placeholder="Repeat password" />
-  <br />
-  <fieldset>
-    <label for="image">Add a picture of yourself!</label><br />
-    <input type="file" name="image" id="image" />
-  </fieldset>
-  <input type="submit" value="Register" />
-</form> }}

@@ -22,7 +22,7 @@ exports.postRegister = (req, res, next) => {
         email,
         password: auth.hashPassword(password),
       });
-      if (req.files.image) {
+      if (req.files && req.files.image) {
         const image = req.files.image;
         const filename = getUniqueFilename(image.name);
         const uploadPath = __dirname + "/../public/uploads/" + filename;

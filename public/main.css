@@ -122,6 +122,22 @@ nav > a:hover::before {
   font-size: 12px;
 }
 
+.auth-fieldset {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-fieldset > input {
+  display: none;
+}
+
+.auth-fieldset > label {
+  cursor: pointer;
+}
+
 .auth-btn {
   align-self: center;
   border: 1px solid #e3e3e3;
@@ -192,13 +208,16 @@ nav > a:hover::before {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .post {
   border-radius: 20px;
   border: 2px solid #e3e3e3;
   padding: 2rem;
-  max-width: 1000px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;

@@ -8,9 +8,13 @@
     method="post"
     enctype="multipart/form-data"
   >
-    <fieldset>
-      {{!-- <img src="{{imageUrl}}" alt="picture of {{username}}" /> --}}
-      <input type="file" name="image" id="image" />
+    <fieldset class="auth-fieldset auth-input">
+      <label for="image">
+        <div class="auth-img">
+          <img src="{{imageUrl}}" id="output" alt="Picture of {{username}}" />
+        </div>
+        Add a profile picture</label>
+      <input type="file" name="image" id="image" onchange="loadFile(event)" />
     </fieldset>
 
     <input type="submit" value="Save" />

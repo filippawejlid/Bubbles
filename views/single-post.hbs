@@ -1,6 +1,18 @@
 <h3>
-  {{username}}
+  {{postedByUsername}}
 </h3>
+
+{{#if myPost}}
+  <a href="/user/edit-post/{{myPostId}}">
+    <i class="fa-solid fa-pen"></i>
+  </a>
+  <form action="/user/delete-post/{{myPostId}}" method="post">
+
+    <button type="submit">
+      <i class="fa-solid fa-trash-can"></i>
+    </button>
+  </form>
+{{/if}}
 
 <div class="post-container">
   <p class="content">

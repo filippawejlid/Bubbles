@@ -5,11 +5,7 @@ const { validatePost, getUniqueFilename } = require("../utils");
 const jwt = require("jsonwebtoken");
 
 exports.getRegister = (req, res, next) => {
-  const pictures = {
-    pic: req.files,
-    anon: "/images/avatar.png",
-  };
-  res.render("auth/register", { pictures });
+  res.render("auth/register", { anon: "/images/avatar.png" });
 };
 
 exports.postRegister = (req, res, next) => {
@@ -37,7 +33,11 @@ exports.postRegister = (req, res, next) => {
       }
 
       await newUser.save();
-      res.redirect("/user/login");
+      const userData = { userId: newUser._id.toString(), username };
+      const accessToken = jwt.sign(userData, process.env.JWTSECRET);
+
+      res.cookie("token", accessToken);
+      res.redirect("/");
     }
   });
 };

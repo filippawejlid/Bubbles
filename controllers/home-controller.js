@@ -1,5 +1,6 @@
 const PostsModel = require("../models/PostsModel");
 const UserModel = require("../models/UserModel");
+const CommentsModel = require("../models/CommentsModel");
 const { validatePost } = require("../utils");
 
 exports.getPosts = async (req, res, next) => {

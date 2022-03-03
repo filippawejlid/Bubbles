@@ -1,5 +1,4 @@
 const CommentsModel = require("../models/CommentsModel.js");
-const UserModel = require("../models/userModel.js");
 const PostsModel = require("../models/PostsModel.js");
 
 const { validateComment } = require("../utils.js");

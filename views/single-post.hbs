@@ -1,0 +1,24 @@
+<h3>
+  {{username}}
+</h3>
+
+<div class="post-container">
+  <p class="content">
+    {{content}}
+  </p>
+  <span class="time">
+    {{formatDate createdAt}}
+  </span>
+  <form method="post">
+    <input type="text" name="text" placeholder="Comment..." />
+    <input type="submit" value="Add comment" />
+  </form>
+  <p>{{error}}</p>
+  <h3>Kommentarer</h3>
+  {{#each comments}}
+    <div class="comment-container">
+      <a href="/users/{{postedBy._id}}">{{postedBy.username}}</a>
+      <p>{{text}} (created: {{formatDate createdAt}})</p>
+    </div>
+  {{/each}}
+</div>

@@ -17,28 +17,22 @@ exports.postNewComment = async (req, res, next) => {
 
   if (validateComment(comment)) {
     await comment.save();
-
-    const commentId = comment._id;
-
-    CommentsModel.findOne({ _id: commentId })
+    res.redirect("/home/posts/" + postId);
+  } else {
+    const post = await PostsModel.findById(req.params.id)
       .populate("postedBy")
-      .populate("originalPost")
-      .exec(function (err, post) {
-        console.log("Post log:" + comment);
-      });
+      .populate("comments");
 
-    PostsModel.findOne({ _id: postId }).populate("comments");
-  }
-  res.redirect("/home/posts/" + postId);
-  /* else {
-    const posts = await PostsModel.find()
-      .sort([["time", "desc"]])
+    const comments = await CommentsModel.find({ originalPost: postId })
+      .populate("postedBy")
+      .sort([["createdAt", "desc"]])
       .lean();
 
-    res.render("/home", {
-      posts,
+    res.render("single-post", {
       content: post.content,
+      createdAt: post.createdAt,
+      comments,
       error: "Du måste skriva något",
     });
-  }*/
+  }
 };

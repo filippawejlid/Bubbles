@@ -13,12 +13,12 @@
     <input type="text" name="text" placeholder="Comment..." />
     <input type="submit" value="Add comment" />
   </form>
-</div>
-<div class="comment-container">
+  <p>{{error}}</p>
   <h3>Kommentarer</h3>
   {{#each comments}}
-    <p class="text">
-      {{text}}
-    </p>
+    <div class="comment-container">
+      <a href="/users/{{postedBy._id}}">{{postedBy.username}}</a>
+      <p>{{text}} (created: {{formatDate createdAt}})</p>
+    </div>
   {{/each}}
 </div>

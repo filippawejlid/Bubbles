@@ -51,10 +51,7 @@
     <span class="time">
       {{formatDate updatedAt}}
     </span>
-    <form action="/comment" method="post">
-      <input type="text" name="text" />
-      <input type="submit" value="Comment" />
-    </form>
+    <a href="/home/posts/{{_id}}">Enlarge</a>
   </div>
 
   {{#each comments}}

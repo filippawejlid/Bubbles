@@ -11,6 +11,25 @@ exports.getPosts = async (req, res, next) => {
   res.render("home", { posts });
 };
 
+exports.getPost = async (req, res, next) => {
+  const postId = req.params.id;
+  const post = await PostsModel.findById(postId)
+    .populate("postedBy")
+    .populate("comments");
+
+  const comments = await CommentsModel.find({ originalPost: postId })
+    .populate("postedBy")
+    .sort([["createdAt", "desc"]])
+    .lean();
+
+  console.log(post);
+  res.render("single-post", {
+    content: post.content,
+    createdAt: post.createdAt,
+    comments,
+  });
+};
+
 exports.postNewPost = async (req, res, next) => {
   const userId = res.locals.id;
   const content = req.body.content;
@@ -19,14 +38,6 @@ exports.postNewPost = async (req, res, next) => {
 
   if (validatePost(post)) {
     await post.save();
-
-    const postId = post._id;
-
-    PostsModel.findOne({ _id: postId })
-      .populate("postedBy")
-      .exec(function (err, post) {
-        const content = post.content.trim();
-      });
 
     res.redirect("/home");
   } else {

@@ -1,30 +1,37 @@
 const CommentsModel = require("../models/CommentsModel.js");
-const UserModel = require("../models/UserModel.js");
-const validatePost = require("../utils.js");
+const UserModel = require("../models/userModel.js");
+const PostsModel = require("../models/PostsModel.js");
+
+const { validateComment } = require("../utils.js");
 
 exports.postNewComment = async (req, res, next) => {
-  const username = res.locals.username;
-  const commentContent = req.body.text;
+  const userId = res.locals.id;
+  const text = req.body.text;
+  const postId = req.params.id;
 
-  const comment = new CommentsModel({ postedBy: username, commentContent });
+  const comment = new CommentsModel({
+    postedBy: userId,
+    text,
+    originalPost: postId,
+  });
 
-  if (validatePost(comment)) {
+  if (validateComment(comment)) {
     await comment.save();
-
-    const commentId = comment._id;
-
-    CommentsModel.findOne({ _id: commentId })
-      .populate("postedBy")
-      .exec(function (err, comment) {});
-    res.redirect("/home");
+    res.redirect("/home/posts/" + postId);
   } else {
-    const posts = await PostsModel.find()
-      .sort([["time", "desc"]])
+    const post = await PostsModel.findById(req.params.id)
+      .populate("postedBy")
+      .populate("comments");
+
+    const comments = await CommentsModel.find({ originalPost: postId })
+      .populate("postedBy")
+      .sort([["createdAt", "desc"]])
       .lean();
 
-    res.render("home", {
-      posts,
+    res.render("single-post", {
       content: post.content,
+      createdAt: post.createdAt,
+      comments,
       error: "Du måste skriva något",
     });
   }

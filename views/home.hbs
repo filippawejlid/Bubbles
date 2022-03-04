@@ -19,10 +19,7 @@
       <div class="post">
         <div class="post__info">
           <div class="post__info__author">
-            <img
-              src="https://raw.githubusercontent.com/filippawejlid/Bubbles/develop/public/images/avatar.png"
-              alt=""
-            />
+            <img src="{{postedBy.imageUrl}}" alt="" />
             <h3 class="author">{{postedBy.username}}</h3>
           </div>
           <span class="time">{{formatDate createdAt}}</span>
@@ -31,7 +28,7 @@
           <p>{{content}}</p>
         </div>
       </div>
-
+      <a href="/home/posts/{{_id}}">Open Thread</a>
     {{/each}}
   </section>
 </div>
@@ -54,10 +51,7 @@
     <span class="time">
       {{formatDate updatedAt}}
     </span>
-    <form action="/comment" method="post">
-      <input type="text" name="text" />
-      <input type="submit" value="Comment" />
-    </form>
+    <a href="/home/posts/{{_id}}">Enlarge</a>
   </div>
 
   {{#each comments}}

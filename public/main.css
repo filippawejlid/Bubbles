@@ -15,6 +15,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 p {
@@ -51,18 +52,39 @@ nav > a {
   position: relative;
 }
 
-/* nav > a::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  height: 1px;
-  width: 0%;
-  background-color: #000;
-  transition: 0.2s ease;
+/* Styles for dropdown (if we want it) */
+
+/* .dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-nav > a:hover::before {
-  width: 100%;
+.dropbtn {
+  background-color: #fff;
+  border: none;
+}
+
+.dropdown-content__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: -30px;
+  min-width: 100px;
+  z-index: 1;
+  border: 1px solid #e3e3e3;
+  border-radius: 5px;
+}
+
+.dropbtn:focus + .dropdown-content {
+  display: block;
 } */
 
 /* LOGIN + REGISTER STYLES */
@@ -72,7 +94,6 @@ nav > a:hover::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* flex-direction: column; */
 }
 
 .auth__form-wrapper {
@@ -101,6 +122,12 @@ nav > a:hover::before {
 
 .form-group {
   position: relative;
+}
+
+.form-group i {
+  color: rgb(36, 36, 36);
+  font-size: 14px;
+  margin-right: 5px;
 }
 
 .auth-input {
@@ -238,12 +265,11 @@ nav > a:hover::before {
 .post {
   border-radius: 20px;
   border: 2px solid #e3e3e3;
-  padding: 2rem;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   transition: all 0.2s ease;
+  overflow: hidden;
 }
 
 .post__info__author {
@@ -260,6 +286,27 @@ nav > a:hover::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 2rem;
+}
+
+.post__content > p {
+  padding: 0 2rem;
+}
+
+.post__thread-btn {
+  align-self: flex-end;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border-top: 2px solid #e3e3e3;
+  border-left: 2px solid #e3e3e3;
+  border-radius: 0;
+  border-top-left-radius: 20px;
+  transition: all 0.2s;
+}
+
+.post__thread-btn:hover {
+  background-color: #f5f5f5;
 }
 
 /* USER-PROFILE STYLES */

@@ -27,9 +27,14 @@ exports.postRegister = (req, res, next) => {
         const image = req.files.image;
         const filename = getUniqueFilename(image.name);
         const uploadPath = __dirname + "/../public/uploads/" + filename;
-        await image.mv(uploadPath);
-
-        newUser.imageUrl = "/uploads/" + filename;
+        await image.mv(uploadPath, (err) => {
+          if (err) {
+            console.log(err);
+            res.render("auth/register", { anon: "/images/avatar.png" });
+          } else {
+            newUser.imageUrl = "/uploads/" + filename;
+          }
+        });
       }
 
       await newUser.save();

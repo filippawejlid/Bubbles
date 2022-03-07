@@ -340,7 +340,6 @@ nav > a {
 
 .comments-section {
   margin-top: 30px;
-  /* background-color: pink; */
   display: flex;
   flex-direction: column;
   align-items: center;

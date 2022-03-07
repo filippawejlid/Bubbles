@@ -31,6 +31,10 @@
     <div class="comment-container">
       <a href="/users/{{postedBy._id}}">{{postedBy.username}}</a>
       <p>{{text}} (created: {{formatDate createdAt}})</p>
+      <a href="/edit-comment/{{_id}}"><i class="fa-solid fa-pen"></i></a>
+      <a href="/delete-comment/{{_id}}"><i
+          class="fa-solid fa-trash-can"
+        ></i></a>
     </div>
   {{/each}}
 </div>

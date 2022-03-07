@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 app.get("/", forceAuthorize);
 
 app.use("/home", homeRoutes);
-app.use("/home", commentRoutes);
+app.use("/", commentRoutes);
 app.use("/user", userRoutes);
 
 app.use("/", (req, res) => {

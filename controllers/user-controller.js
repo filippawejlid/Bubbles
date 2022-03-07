@@ -30,7 +30,10 @@ exports.postRegister = (req, res, next) => {
         await image.mv(uploadPath, (err) => {
           if (err) {
             console.log(err);
-            res.render("auth/register", { anon: "/images/avatar.png" });
+            return res.render("auth/register", {
+              anon: "/images/avatar.png",
+              fileError: "File-size is too big, max 1mb!",
+            });
           } else {
             newUser.imageUrl = "/uploads/" + filename;
           }

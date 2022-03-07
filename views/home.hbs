@@ -18,7 +18,9 @@
       <div class="post">
         <div class="post__info">
           <div class="post__info__author">
-            <img src="{{postedBy.imageUrl}}" alt="" />
+            <div class="post__info__img-container">
+              <img src="{{postedBy.imageUrl}}" alt="" />
+            </div>
             <h3 class="author">{{postedBy.username}}</h3>
           </div>
           <span class="time">{{formatDate createdAt}}</span>

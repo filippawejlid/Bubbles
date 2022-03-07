@@ -2,8 +2,13 @@
   <div class="post">
     <div class="post__info">
       <div class="post__info__author">
-        <img src="{{postedBy.imageUrl}}" alt="" />
-        <h3 class="author">{{postedByUsername}}</h3>
+        <div class="round-img-container">
+
+          <img src="{{postedBy.imageUrl}}" alt="" />
+        </div>
+        <h3 class="author">
+          <a href="/user/profile/{{userId}}"> {{postedByUsername}}</a>
+        </h3>
       </div>
       <span class="time">{{formatDate createdAt}}</span>
     </div>
@@ -45,9 +50,12 @@
 
       <div class="comment">
         <div class="comment__info">
-          <img src="{{postedBy.imageUrl}}" alt="" />
+          <div class="round-img-container">
+
+            <img src="{{postedBy.imageUrl}}" alt="" />
+          </div>
           <div class="comment__info__name-date">
-            <a href="/users/{{postedBy._id}}">{{postedBy.username}}</a>
+            <a href="/user/profile/{{postedBy._id}}">{{postedBy.username}}</a>
             <span>{{formatDate createdAt}}</span>
           </div>
         </div>

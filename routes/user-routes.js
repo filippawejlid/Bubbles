@@ -29,6 +29,8 @@ router.post("/settings/edit-email", userController.postEditEmail);
 
 router.post("/settings/delete", userController.postDeleteUser);
 
+router.get("/profile/:id", userController.getUserSingle);
+
 router.get("/logout", userController.getLogout);
 
 module.exports = router;

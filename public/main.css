@@ -26,6 +26,19 @@ p {
   flex: 1;
 }
 
+.round-img-container {
+  width: 50px;
+  height: 50px;
+}
+
+.round-img-container > img {
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* HEADER + NAV STYLES */
 
 header {
@@ -173,18 +186,10 @@ nav > a {
   align-items: center;
 }
 
-.auth-img {
+.auth-fieldset .round-img-container {
   width: 150px;
   height: 150px;
   border-radius: 100%;
-}
-
-.auth-img > img {
-  border-radius: 100%;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
 }
 
 .auth-btn {
@@ -276,19 +281,6 @@ nav > a {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.post__info__img-container {
-  width: 50px;
-  height: 50px;
-}
-
-.post__info__img-container > img {
-  border-radius: 50%;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
 }
 
 .post__info {
@@ -393,6 +385,7 @@ nav > a {
 
 .comment__info img {
   width: 40px;
+  height: 40px;
 }
 
 .comment__info__name-date {
@@ -407,4 +400,11 @@ nav > a {
 
 .comment__text {
   margin-left: 48px;
+}
+
+/* SINGLE USER */
+
+.profile__info > .round-img-container {
+  width: 300px;
+  height: 300px;
 }

@@ -1,8 +1,4 @@
-<h3>
-  {{postedByUsername}}
-</h3>
-
-{{#if myPost}}
+{{!-- {{#if myPost}}
   <a href="/user/edit-post/{{myPostId}}">
     <i class="fa-solid fa-pen"></i>
   </a>
@@ -12,9 +8,68 @@
       <i class="fa-solid fa-trash-can"></i>
     </button>
   </form>
-{{/if}}
+{{/if}} --}}
 
-<div class="post-container">
+<section class="post-section">
+  <div class="post">
+    <div class="post__info">
+      <div class="post__info__author">
+        <img src="{{postedBy.imageUrl}}" alt="" />
+        <h3 class="author">{{postedByUsername}}</h3>
+      </div>
+      <span class="time">{{formatDate createdAt}}</span>
+    </div>
+    <div class="post__content">
+      <p>{{content}}</p>
+    </div>
+    <div class="single-post__thread-btn" href="/home/posts/{{_id}}">
+      {{#if myPost}}
+        <div class="single-post__thred-btn__inner">
+          <a href="/user/edit-post/{{myPostId}}">
+            <i class="fa-solid fa-pen"></i>
+          </a>
+          <form action="/user/delete-post/{{myPostId}}" method="post">
+
+            <button type="submit">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </form>
+        </div>
+
+      {{/if}}
+    </div>
+  </div>
+</section>
+
+<section class="comments-section">
+  <h3>Comments</h3>
+  <form class="comment-form" method="post">
+    <input
+      class="comment-form__input"
+      type="text"
+      name="text"
+      placeholder="Comment..."
+    />
+    <input class="comment-form__button" type="submit" value="Add comment" />
+  </form>
+  <div class="comments-wrapper">
+    {{#each comments}}
+
+      <div class="comment">
+        <div class="comment__info">
+          <img src="{{postedBy.imageUrl}}" alt="" />
+          <div class="comment__info__name-date">
+            <a href="/users/{{postedBy._id}}">{{postedBy.username}}</a>
+            <span>{{formatDate createdAt}}</span>
+          </div>
+        </div>
+        <p class="comment__text">{{text}}</p>
+      </div>
+    {{/each}}
+  </div>
+</section>
+
+{{!-- <div class="post-container">
   <p class="content">
     {{content}}
   </p>
@@ -33,4 +88,4 @@
       <p>{{text}} (created: {{formatDate createdAt}})</p>
     </div>
   {{/each}}
-</div>
+</div> --}}

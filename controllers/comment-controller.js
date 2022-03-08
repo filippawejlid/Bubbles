@@ -35,3 +35,54 @@ exports.postNewComment = async (req, res, next) => {
     });
   }
 };
+
+exports.getEditComment = async (req, res, next) => {
+  const id = req.params.id;
+
+  const comment = await CommentsModel.findOne({ _id: id });
+
+  res.render("user/edit-comment", comment);
+};
+
+exports.postEditComment = async (req, res, next) => {
+  const id = req.params.id;
+
+  const comment = await CommentsModel.findOne({ _id: id });
+
+  const updatedComment = {
+    text: req.body.text,
+  };
+
+  if (validateComment(updatedComment)) {
+    CommentsModel.updateOne(
+      { _id: id },
+      { $set: updatedComment },
+      (err, result) => {
+        res.redirect("/home/posts/" + comment.originalPost);
+      }
+    );
+  } else {
+    res.render("user/edit-comment", {
+      error: "No input detected",
+      text: comment.text,
+    });
+  }
+};
+
+exports.getDeleteComment = async (req, res, next) => {
+  const id = req.params.id;
+
+  const comment = await CommentsModel.findOne({ _id: id });
+
+  res.render("user/delete-comment", comment);
+};
+
+exports.postDeleteComment = async (req, res, next) => {
+  const id = req.params.id;
+
+  const comment = await CommentsModel.findOne({ _id: id });
+
+  CommentsModel.deleteOne({ _id: id }, (err, result) => {
+    res.redirect("/home/posts/" + comment.originalPost);
+  });
+};

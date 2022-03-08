@@ -29,7 +29,9 @@
           </form>
         </div>
 
+
       {{/if}}
+
     </div>
   </div>
 </section>
@@ -57,6 +59,10 @@
           <div class="comment__info__name-date">
             <a href="/user/profile/{{postedBy._id}}">{{postedBy.username}}</a>
             <span>{{formatDate createdAt}}</span>
+            <a href="/edit-comment/{{_id}}"><i class="fa-solid fa-pen"></i></a>
+      <a href="/delete-comment/{{_id}}"><i
+          class="fa-solid fa-trash-can"
+        ></i></a>
           </div>
         </div>
         <p class="comment__text">{{text}}</p>

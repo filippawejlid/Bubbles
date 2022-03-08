@@ -1,0 +1,9 @@
+<h2>Redigera inlägg</h2>
+
+<div class="edit-post">
+  {{error}}
+  <form action="/edit-comment/{{_id}}" method="post">
+    <textarea name="text" cols="30" rows="10">{{text}}</textarea>
+    <input type="submit" value="Spara" />
+  </form>
+</div>

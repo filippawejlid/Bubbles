@@ -1,0 +1,10 @@
+<h2>Confirm deletion</h2>
+
+<p>Would you like to delete the following comment?</p>
+
+<p><b>{{text}}</b></p>
+
+<a href="/home">NO</a>
+<form action="/delete-comment/{{_id}}" method="post">
+  <input type="submit" value="YES" />
+</form>

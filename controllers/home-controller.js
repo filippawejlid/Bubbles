@@ -27,6 +27,7 @@ exports.getPost = async (req, res, next) => {
     res.render("single-post", {
       content: post.content,
       createdAt: post.createdAt,
+      userId: post.postedBy._id,
       myPost: true,
       myPostId: post._id,
       postedByUsername: res.locals.username,
@@ -37,6 +38,7 @@ exports.getPost = async (req, res, next) => {
       content: post.content,
       createdAt: post.createdAt,
       postedByUsername: post.postedBy.username,
+      userId: post.postedBy._id,
       comments,
     });
   }

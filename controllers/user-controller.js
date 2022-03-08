@@ -27,9 +27,17 @@ exports.postRegister = (req, res, next) => {
         const image = req.files.image;
         const filename = getUniqueFilename(image.name);
         const uploadPath = __dirname + "/../public/uploads/" + filename;
-        await image.mv(uploadPath);
-
-        newUser.imageUrl = "/uploads/" + filename;
+        await image.mv(uploadPath, (err) => {
+          if (err) {
+            console.log(err);
+            return res.render("auth/register", {
+              anon: "/images/avatar.png",
+              fileError: "File-size is too big, max 1mb!",
+            });
+          } else {
+            newUser.imageUrl = "/uploads/" + filename;
+          }
+        });
       }
 
       await newUser.save();
@@ -100,7 +108,7 @@ exports.postEditPost = async (req, res, next) => {
 
   if (validatePost(post)) {
     PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
-      res.redirect("/user");
+      res.redirect("/user/profile/" + originalPost.postedBy);
     });
   } else {
     res.render("user/edit-post", {
@@ -197,6 +205,37 @@ exports.postDeleteUser = async (req, res, next) => {
     res.cookie("token", "", { maxAge: 0 });
 
     res.redirect("/");
+  });
+};
+
+exports.getUserSingle = async (req, res, next) => {
+  const id = req.params.id;
+
+  const user = await UserModel.findById(id);
+
+  let loggedIn = false;
+
+  if (res.locals.id === id) {
+    loggedIn = true;
+  }
+
+  console.log(loggedIn);
+
+  const posts = await PostsModel.find().lean();
+
+  const userPosts = [];
+
+  for (const item of posts) {
+    if (item.postedBy == id) {
+      userPosts.push(item);
+    }
+  }
+
+  res.render("user/user-single", {
+    loggedIn,
+    userName: user.username,
+    imageUrl: user.imageUrl,
+    userPosts,
   });
 };
 

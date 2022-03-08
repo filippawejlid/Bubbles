@@ -14,59 +14,24 @@
   </div>
 
   <section class="post-section">
-
     {{#each posts}}
       <div class="post">
         <div class="post__info">
           <div class="post__info__author">
-            <img src="{{postedBy.imageUrl}}" alt="" />
-            <h3 class="author">{{postedBy.username}}</h3>
+            <div class="round-img-container">
+              <img src="{{postedBy.imageUrl}}" alt="" />
+            </div>
+            <h3 class="author"><a
+                href="/user/profile/{{postedBy._id}}"
+              >{{postedBy.username}}</a></h3>
           </div>
           <span class="time">{{formatDate createdAt}}</span>
         </div>
         <div class="post__content">
           <p>{{content}}</p>
         </div>
+        <a class="post__thread-btn" href="/home/posts/{{_id}}">Open Thread</a>
       </div>
-      <a href="/home/posts/{{_id}}">Open Thread</a>
     {{/each}}
   </section>
 </div>
-
-{{!-- <input type="submit" value="Share" />
-</form>
-
-{{#each posts}}
-
-  <h3>
-    {{postedBy.username}}
-  </h3>
-
-  <img src="{{postedBy.imageUrl}}" alt="Picture of {{postedBy.username}}" />
-
-  <div class="post-container">
-    <p class="content">
-      {{content}}
-    </p>
-    <span class="time">
-      {{formatDate updatedAt}}
-    </span>
-    <a href="/home/posts/{{_id}}">Enlarge</a>
-  </div>
-
-  {{#each comments}}
-    <h3>
-      {{postedBy.username}}
-    </h3>
-
-    <div class="post-container">
-      <p class="content">
-        {{content}}
-      </p>
-      <span class="time">
-        {{formatDate time}}
-      </span>
-    </div>
-  {{/each}}
-
-{{/each}} --}}

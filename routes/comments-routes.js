@@ -6,7 +6,7 @@ const router = express.Router();
 
 //router.get("/", commentController.getComments);
 
-router.post("/posts/:id", commentController.postNewComment);
+router.post("/home/posts/:id", commentController.postNewComment);
 
 router.get("/edit-comment/:id", commentController.getEditComment);
 

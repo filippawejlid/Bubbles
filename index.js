@@ -65,7 +65,7 @@ app.use("/", commentRoutes);
 app.use("/user", userRoutes);
 
 app.use("/", (req, res) => {
-  res.status(404).render("not-found");
+  res.status(404).render("not-found", { layout: "secondary.hbs" });
 });
 
 app.listen(8000, () => {

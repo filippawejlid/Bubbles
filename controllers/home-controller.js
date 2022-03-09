@@ -54,6 +54,7 @@ exports.getSinglePost = async (req, res, next) => {
       userId: post.postedBy._id,
       myPost: true,
       myPostId: post._id,
+      imageUrl: post.postedBy.imageUrl,
       user: res.locals.id,
       postedByUsername: res.locals.username,
       comments,
@@ -62,6 +63,7 @@ exports.getSinglePost = async (req, res, next) => {
     res.render("single-post", {
       content: post.content,
       createdAt: post.createdAt,
+      imageUrl: post.postedBy.imageUrl,
       postedByUsername: post.postedBy.username,
       userId: post.postedBy._id,
       user: res.locals.id,

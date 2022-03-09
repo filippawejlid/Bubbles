@@ -30,6 +30,7 @@ exports.getPost = async (req, res, next) => {
       userId: post.postedBy._id,
       myPost: true,
       myPostId: post._id,
+      user: res.locals.id,
       postedByUsername: res.locals.username,
       comments,
     });
@@ -39,6 +40,7 @@ exports.getPost = async (req, res, next) => {
       createdAt: post.createdAt,
       postedByUsername: post.postedBy.username,
       userId: post.postedBy._id,
+      user: res.locals.id,
       comments,
     });
   }

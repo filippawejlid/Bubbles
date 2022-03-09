@@ -62,14 +62,21 @@
           </div>
         </div>
         <p class="comment__text">{{text}}</p>
-        <div class="single-post__thread-btn">
-          <div class="single-post__thred-btn__inner">
-            <a href="/edit-comment/{{_id}}"><i class="fa-solid fa-pen"></i></a>
-            <a href="/delete-comment/{{_id}}"><i
-                class="fa-solid fa-trash-can"
-              ></i></a>
+
+        {{#allowEdit this.postedBy._id ../user}}
+
+          <div class="single-post__thread-btn">
+            <div class="single-post__thred-btn__inner">
+              <a href="/edit-comment/{{../this._id}}"><i
+                  class="fa-solid fa-pen"
+                ></i></a>
+              <a href="/delete-comment/{{../this._id}}"><i
+                  class="fa-solid fa-trash-can"
+                ></i></a>
+            </div>
           </div>
-        </div>
+
+        {{/allowEdit}}
       </div>
     {{/each}}
   </div>

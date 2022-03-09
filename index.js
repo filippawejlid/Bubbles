@@ -6,11 +6,11 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const passport = require("passport");
 const { forceAuthorize } = require("./middlewares/auth.js");
 
 const homeRoutes = require("./routes/home-routes");
 const startRoutes = require("./routes/start-routes.js");
-const commentRoutes = require("./routes/comments-routes.js");
 const googleLoginRoutes = require("./routes/googleLogin-routes.js");
 const fileUpload = require("express-fileupload");
 
@@ -41,6 +41,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());
+app.use(passport.initialize());
 
 app.use((req, res, next) => {
   const { token } = req.cookies;
@@ -64,8 +65,6 @@ app.get("/failed", (req, res) => {
 
 app.use("/start", startRoutes);
 app.use("/home", homeRoutes);
-app.use("/", commentRoutes);
-app.use("/user", userRoutes);
 app.use("/", googleLoginRoutes);
 
 app.use("/", (req, res) => {

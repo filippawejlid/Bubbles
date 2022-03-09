@@ -107,7 +107,13 @@ exports.postEditPost = async (req, res, next) => {
 exports.postDeletePost = async (req, res, next) => {
   const id = req.params.id;
 
-  PostsModel.deleteOne({ _id: id }, (err, result) => {
+  PostsModel.deleteOne({ _id: id }, async (err, result) => {
+    const comments = await CommentsModel.find();
+    comments.forEach((comment) => {
+      if (comment.originalPost == id.toString()) {
+        CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
+      }
+    });
     res.redirect("/home/profile" + id);
   });
 };

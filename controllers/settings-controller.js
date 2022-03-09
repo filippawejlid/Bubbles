@@ -1,4 +1,6 @@
 const UserModel = require("../models/UserModel.js");
+const PostsModel = require("../models/PostsModel.js");
+const CommentsModel = require("../models/CommentsModel.js");
 const auth = require("../middlewares/auth.js");
 const { getUniqueFilename } = require("../utils");
 const jwt = require("jsonwebtoken");
@@ -70,10 +72,17 @@ exports.postEditEmail = async (req, res, next) => {
 exports.postDeleteUser = async (req, res, next) => {
   const id = res.locals.id;
   const posts = await PostsModel.find();
+  const comments = await CommentsModel.find();
 
   posts.forEach((post) => {
     if (post.postedBy == id.toString()) {
       PostsModel.deleteOne({ _id: post._id }, (err, result) => {});
+    }
+  });
+
+  comments.forEach((comment) => {
+    if (comment.postedBy == id.toString()) {
+      CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
     }
   });
 

@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("./mongoose");
+require("./passport.js");
 
 const express = require("express");
 const exphbs = require("express-handlebars");
@@ -10,6 +11,7 @@ const { forceAuthorize } = require("./middlewares/auth.js");
 const userRoutes = require("./routes/user-routes.js");
 const homeRoutes = require("./routes/home-routes");
 const commentRoutes = require("./routes/comments-routes.js");
+const googleLoginRoutes = require("./routes/googleLogin-routes.js");
 const fileUpload = require("express-fileupload");
 
 const app = express();
@@ -64,10 +66,14 @@ app.use((req, res, next) => {
 });
 
 app.get("/", forceAuthorize);
+app.get("/failed", (req, res) => {
+  res.send("Google login failed");
+});
 
 app.use("/home", homeRoutes);
 app.use("/", commentRoutes);
 app.use("/user", userRoutes);
+app.use("/", googleLoginRoutes);
 
 app.use("/", (req, res) => {
   res.status(404).render("not-found");

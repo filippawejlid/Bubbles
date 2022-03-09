@@ -3,6 +3,7 @@ const PostsModel = require("../models/PostsModel.js");
 const auth = require("../middlewares/auth.js");
 const { validatePost, getUniqueFilename } = require("../utils");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 exports.getRegister = (req, res, next) => {
   res.render("auth/register", { anon: "/images/avatar.png" });
@@ -63,10 +64,40 @@ exports.postLogin = (req, res, next) => {
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
 
       res.cookie("token", accessToken);
-      res.redirect("/");
+      res.redirect("/home");
     } else {
       res.send("login failed");
     }
+  });
+};
+
+exports.googleAuthRoute = passport.authenticate("google", {
+  scope: ["email", "profile"],
+});
+
+exports.googleSuccessCallback = async (req, res) => {
+  UserModel.findOne({ googleId: req.user.id }, async (err, user) => {
+    const userData = {};
+
+    if (user) {
+      userData.userId = user._id;
+      userData.username = user.username;
+    } else {
+      const newUser = new UserModel({
+        googleId: req.user.id,
+        username: req.user.displayName,
+        email: req.user.emails[0].value,
+        imageUrl: req.user.photos[0].value,
+      });
+      const result = await newUser.save();
+      userData.userId = result._id;
+      userData.username = result.username;
+    }
+
+    const accessToken = jwt.sign(userData, process.env.JWTSECRET);
+
+    res.cookie("token", accessToken);
+    res.redirect("/");
   });
 };
 

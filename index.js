@@ -7,9 +7,8 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const { forceAuthorize } = require("./middlewares/auth.js");
 
-const userRoutes = require("./routes/user-routes.js");
 const homeRoutes = require("./routes/home-routes");
-const commentRoutes = require("./routes/comments-routes.js");
+const startRoutes = require("./routes/start-routes.js");
 const fileUpload = require("express-fileupload");
 
 const app = express();
@@ -33,15 +32,7 @@ app.set("view engine", "hbs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(
-  fileUpload()
-  //   {
-  //   limits: {
-  //     fileSize: 1000000, //1mb
-  //   },
-  //   abortOnLimit: true,
-  // }
-);
+app.use(fileUpload());
 
 app.use((req, res, next) => {
   const { token } = req.cookies;
@@ -60,9 +51,8 @@ app.use((req, res, next) => {
 
 app.get("/", forceAuthorize);
 
+app.use("/start", startRoutes);
 app.use("/home", homeRoutes);
-app.use("/", commentRoutes);
-app.use("/user", userRoutes);
 
 app.use("/", (req, res) => {
   res.status(404).render("not-found", { layout: "secondary.hbs" });

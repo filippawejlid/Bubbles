@@ -12,7 +12,31 @@ exports.getPosts = async (req, res, next) => {
   res.render("home", { posts });
 };
 
-exports.getPost = async (req, res, next) => {
+exports.postNewPost = async (req, res, next) => {
+  const userId = res.locals.id;
+  const content = req.body.content;
+
+  const post = new PostsModel({ postedBy: userId, content: content.trim() });
+
+  if (validatePost(post)) {
+    await post.save();
+
+    res.redirect("/home");
+  } else {
+    const posts = await PostsModel.find()
+      .populate("postedBy")
+      .sort([["time", "desc"]])
+      .lean();
+
+    res.render("home", {
+      posts,
+      content: post.content,
+      error: "Du måste skriva något",
+    });
+  }
+};
+
+exports.getSinglePost = async (req, res, next) => {
   const postId = req.params.id;
   const post = await PostsModel.findById(postId)
     .populate("postedBy")
@@ -46,26 +70,78 @@ exports.getPost = async (req, res, next) => {
   }
 };
 
-exports.postNewPost = async (req, res, next) => {
-  const userId = res.locals.id;
-  const content = req.body.content;
+exports.getEditPost = async (req, res, next) => {
+  const id = req.params.id;
 
-  const post = new PostsModel({ postedBy: userId, content: content.trim() });
+  const post = await PostsModel.findOne({ _id: id });
+  console.log(post);
+
+  res.render("user/edit-post", post);
+};
+
+exports.postEditPost = async (req, res, next) => {
+  const id = req.params.id;
+
+  const originalPost = await PostsModel.findOne({ _id: id });
+
+  const post = {
+    content: req.body.content,
+    time: Date.now(),
+  };
 
   if (validatePost(post)) {
-    await post.save();
-
-    res.redirect("/home");
+    PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
+      res.redirect("/home/profile/" + originalPost.postedBy);
+    });
   } else {
-    const posts = await PostsModel.find()
-      .populate("postedBy")
-      .sort([["time", "desc"]])
-      .lean();
-
-    res.render("home", {
-      posts,
-      content: post.content,
+    res.render("user/edit-post", {
       error: "Du måste skriva något",
+      content: originalPost.content,
+      _id: originalPost._id,
     });
   }
+};
+
+exports.postDeletePost = async (req, res, next) => {
+  const id = req.params.id;
+
+  PostsModel.deleteOne({ _id: id }, (err, result) => {
+    res.redirect("/home/profile" + id);
+  });
+};
+
+exports.getUserSingle = async (req, res, next) => {
+  const id = req.params.id;
+
+  const user = await UserModel.findById(id);
+
+  let loggedIn = false;
+
+  if (res.locals.id === id) {
+    loggedIn = true;
+  }
+
+  console.log(loggedIn);
+
+  const posts = await PostsModel.find().lean();
+
+  const userPosts = [];
+
+  for (const item of posts) {
+    if (item.postedBy == id) {
+      userPosts.push(item);
+    }
+  }
+
+  res.render("user/user-single", {
+    loggedIn,
+    userName: user.username,
+    imageUrl: user.imageUrl,
+    userPosts,
+  });
+};
+
+exports.getLogout = (req, res) => {
+  res.cookie("token", "", { maxAge: 0 });
+  res.redirect("/");
 };

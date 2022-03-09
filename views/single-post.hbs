@@ -7,7 +7,7 @@
           <img src="{{postedBy.imageUrl}}" alt="" />
         </div>
         <h3 class="author">
-          <a href="/user/profile/{{userId}}"> {{postedByUsername}}</a>
+          <a href="/home/profile/{{userId}}"> {{postedByUsername}}</a>
         </h3>
       </div>
       <span class="time">{{formatDate createdAt}}</span>
@@ -18,10 +18,10 @@
     <div class="single-post__thread-btn" href="/home/posts/{{_id}}">
       {{#if myPost}}
         <div class="single-post__thred-btn__inner">
-          <a href="/user/edit-post/{{myPostId}}">
+          <a href="/home/edit-post/{{myPostId}}">
             <i class="fa-solid fa-pen"></i>
           </a>
-          <form action="/user/delete-post/{{myPostId}}" method="post">
+          <form action="/home/delete-post/{{myPostId}}" method="post">
 
             <button type="submit">
               <i class="fa-solid fa-trash-can"></i>
@@ -56,7 +56,7 @@
             <img src="{{postedBy.imageUrl}}" alt="" />
           </div>
           <div class="comment__info__name-date">
-            <a href="/user/profile/{{postedBy._id}}">{{postedBy.username}}</a>
+            <a href="/home/profile/{{postedBy._id}}">{{postedBy.username}}</a>
             <span>{{formatDate createdAt}}</span>
 
           </div>

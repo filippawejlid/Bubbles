@@ -54,6 +54,8 @@ exports.getSinglePost = async (req, res, next) => {
       userId: post.postedBy._id,
       myPost: true,
       myPostId: post._id,
+      imageUrl: post.postedBy.imageUrl,
+      user: res.locals.id,
       postedByUsername: res.locals.username,
       comments,
     });
@@ -61,8 +63,10 @@ exports.getSinglePost = async (req, res, next) => {
     res.render("single-post", {
       content: post.content,
       createdAt: post.createdAt,
+      imageUrl: post.postedBy.imageUrl,
       postedByUsername: post.postedBy.username,
       userId: post.postedBy._id,
+      user: res.locals.id,
       comments,
     });
   }
@@ -103,7 +107,13 @@ exports.postEditPost = async (req, res, next) => {
 exports.postDeletePost = async (req, res, next) => {
   const id = req.params.id;
 
-  PostsModel.deleteOne({ _id: id }, (err, result) => {
+  PostsModel.deleteOne({ _id: id }, async (err, result) => {
+    const comments = await CommentsModel.find();
+    comments.forEach((comment) => {
+      if (comment.originalPost == id.toString()) {
+        CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
+      }
+    });
     res.redirect("/home/profile/" + res.locals.id);
   });
 };

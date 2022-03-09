@@ -24,6 +24,11 @@ app.engine(
         const date = new Date(time);
         return date.toLocaleDateString() + " " + date.toLocaleTimeString();
       },
+      allowEdit: (value, value2, options) => {
+        if (value.toString() === value2.toString()) {
+          return options.fn(this);
+        } else return options.inverse(this);
+      },
     },
   })
 );

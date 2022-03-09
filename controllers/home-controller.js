@@ -104,7 +104,7 @@ exports.postDeletePost = async (req, res, next) => {
   const id = req.params.id;
 
   PostsModel.deleteOne({ _id: id }, (err, result) => {
-    res.redirect("/home/profile" + id);
+    res.redirect("/home/profile/" + res.locals.id);
   });
 };
 

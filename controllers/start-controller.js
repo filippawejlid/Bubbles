@@ -22,7 +22,7 @@ exports.postRegister = (req, res, next) => {
         email,
         password: auth.hashPassword(password),
       });
-      console.log(req.files);
+
       if (req.files && req.files.image) {
         const image = req.files.image;
         const filename = getUniqueFilename(image.name);

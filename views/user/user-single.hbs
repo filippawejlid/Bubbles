@@ -35,15 +35,17 @@
         </div>
       {{/each}}
     {{else}}
+      {{#each userPosts}}
 
-      <div class="user-post">
-        <div class="user-post__content">
-          <p>{{content}}</p>
+        <div class="user-post">
+          <div class="user-post__content">
+            <p>{{content}}</p>
+          </div>
+          <div class="user-post__info">
+            <span class="time">{{formatDate createdAt}}</span>
+          </div>
         </div>
-        <div class="user-post__info">
-          <span class="time">{{formatDate createdAt}}</span>
-        </div>
-      </div>
+      {{/each}}
 
     {{/if}}
 

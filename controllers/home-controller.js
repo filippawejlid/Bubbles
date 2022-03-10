@@ -105,6 +105,7 @@ exports.postEditPost = async (req, res, next) => {
 
 exports.postDeletePost = async (req, res, next) => {
   const id = req.params.id;
+  const originalPost = await PostsModel.findOne({ _id: id });
 
   PostsModel.deleteOne({ _id: id }, async (err, result) => {
     const comments = await CommentsModel.find();
@@ -113,7 +114,7 @@ exports.postDeletePost = async (req, res, next) => {
         CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
       }
     });
-    res.redirect("/home/profile" + id);
+    res.redirect("/home/profile/" + originalPost.postedBy);
   });
 };
 

@@ -204,6 +204,20 @@ nav > a {
   transition: all 0.2s;
 }
 
+#google-btn {
+  margin-top: 15px;
+  text-decoration: none;
+  align-self: center;
+  border: 1px solid #e3e3e3;
+  background-color: #df6908;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.8rem 3.2rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
 .home-form__btn:hover {
   background-color: #1b8cd3;
 }
@@ -262,25 +276,62 @@ nav > a {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  max-width: 900px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
+.bubble {
+  width: 85%;
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: lightblue;
+  border-radius: 100px;
+}
+
+.bubble:after,
+.bubble:before {
+  content: "";
+  position: relative;
+  display: inline-block;
+  background: inherit;
+  border-radius: inherit;
+}
+
+.bubble::after {
+  width: 100px;
+  height: 100px;
+  top: -100px;
+  left: 10px;
+}
+.bubble::before {
+  width: 100px;
+  height: 100px;
+  top: 100px;
+  left: -10px;
+}
+
 .post {
   border-radius: 20px;
-  border: 2px solid #e3e3e3;
-  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  width: 80%;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease;
   overflow: hidden;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .post__info__author {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.author > a {
+  text-decoration: none;
 }
 
 .post__info {
@@ -299,8 +350,8 @@ nav > a {
   text-decoration: none;
   border-radius: 5px;
   padding: 10px 2rem;
-  border-top: 2px solid #e3e3e3;
-  border-left: 2px solid #e3e3e3;
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  border-left: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 0;
   border-top-left-radius: 20px;
   transition: all 0.2s;
@@ -376,7 +427,6 @@ nav > a {
   border-bottom: 2px solid #e3e3e3;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .comment__info {
@@ -395,13 +445,17 @@ nav > a {
   flex-direction: column;
 }
 
+.comment__info__name-date > a {
+  text-decoration: none;
+}
+
 .comment__info__name-date > span {
   font-weight: 400;
   font-size: 12px;
 }
 
 .comment__text {
-  margin-left: 48px;
+  margin-left: 60px;
 }
 
 /* SINGLE USER */

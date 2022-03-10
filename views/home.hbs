@@ -15,22 +15,24 @@
 
   <section class="post-section">
     {{#each posts}}
-      <div class="post">
-        <div class="post__info">
-          <div class="post__info__author">
-            <div class="round-img-container">
-              <img src="{{postedBy.imageUrl}}" alt="" />
+      <div class="bubble">
+        <div class="post">
+          <div class="post__info">
+            <div class="post__info__author">
+              <div class="round-img-container">
+                <img src="{{postedBy.imageUrl}}" alt="" />
+              </div>
+              <h3 class="author"><a
+                  href="/home/profile/{{postedBy._id}}"
+                >{{postedBy.username}}</a></h3>
             </div>
-            <h3 class="author"><a
-                href="/home/profile/{{postedBy._id}}"
-              >{{postedBy.username}}</a></h3>
+            <span class="time">{{formatDate createdAt}}</span>
           </div>
-          <span class="time">{{formatDate createdAt}}</span>
+          <div class="post__content">
+            <p>{{content}}</p>
+          </div>
+          <a class="post__thread-btn" href="/home/posts/{{_id}}">Open Thread</a>
         </div>
-        <div class="post__content">
-          <p>{{content}}</p>
-        </div>
-        <a class="post__thread-btn" href="/home/posts/{{_id}}">Open Thread</a>
       </div>
     {{/each}}
   </section>

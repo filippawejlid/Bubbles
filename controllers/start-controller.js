@@ -30,13 +30,13 @@ exports.postRegister = (req, res, next) => {
     error.confirmPassword = "Invalid password";
   }
 
-  if (error) {
+  if (Object.keys(error).length !== 0) {
     return res.render("auth/register", { error, anon: "/images/avatar.png" });
   }
 
   UserModel.findOne({ username }, async (err, user) => {
     if (user) {
-      error.userExist = "Username in use";
+      error.userExist = "Username already exist";
       return res.render("auth/register", { error, anon: "/images/avatar.png" });
     } else if (password !== confirmPassword) {
       error.passwordMatch = "Passwords don't match";
@@ -47,7 +47,6 @@ exports.postRegister = (req, res, next) => {
         email,
         password: auth.hashPassword(password),
       });
-
       if (req.files && req.files.image) {
         const image = req.files.image;
         const filename = getUniqueFilename(image.name);
@@ -55,11 +54,9 @@ exports.postRegister = (req, res, next) => {
         await image.mv(uploadPath);
         newUser.imageUrl = "/uploads/" + filename;
       }
-
       await newUser.save();
       const userData = { userId: newUser._id.toString(), username };
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
-
       res.cookie("token", accessToken);
       res.redirect("/");
     }

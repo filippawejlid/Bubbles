@@ -76,8 +76,10 @@ exports.getEditPost = async (req, res, next) => {
   const id = req.params.id;
 
   const post = await PostsModel.findOne({ _id: id });
-
-  res.render("user/edit-post", post);
+  console.log(post.postedBy, res.locals.id);
+  if (post.postedBy.toString() === res.locals.id) {
+    res.render("user/edit-post", post);
+  } else next();
 };
 
 exports.postEditPost = async (req, res, next) => {
@@ -90,7 +92,10 @@ exports.postEditPost = async (req, res, next) => {
     time: Date.now(),
   };
 
-  if (validatePost(post)) {
+  if (
+    validatePost(post) &&
+    originalPost.postedBy.toString() === res.locals.id
+  ) {
     PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
       res.redirect("/home/profile/" + originalPost.postedBy);
     });

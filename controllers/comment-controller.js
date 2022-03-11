@@ -41,7 +41,9 @@ exports.getEditComment = async (req, res, next) => {
 
   const comment = await CommentsModel.findOne({ _id: id });
 
-  res.render("user/edit-comment", comment);
+  if (comment.postedBy.toString() === res.locals.id) {
+    res.render("user/edit-comment", comment);
+  } else next();
 };
 
 exports.postEditComment = async (req, res, next) => {
@@ -53,7 +55,10 @@ exports.postEditComment = async (req, res, next) => {
     text: req.body.text,
   };
 
-  if (validateComment(updatedComment)) {
+  if (
+    validateComment(updatedComment) &&
+    comment.postedBy.toString() === res.locals.id
+  ) {
     CommentsModel.updateOne(
       { _id: id },
       { $set: updatedComment },

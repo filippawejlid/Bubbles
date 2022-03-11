@@ -4,6 +4,7 @@ const CommentsModel = require("../models/CommentsModel.js");
 const auth = require("../middlewares/auth.js");
 const { getUniqueFilename } = require("../utils");
 const jwt = require("jsonwebtoken");
+const validator = require("validator");
 
 exports.getSettings = async (req, res, next) => {
   const user = await UserModel.findById({ _id: res.locals.id });
@@ -33,6 +34,14 @@ exports.postEditUser = async (req, res, next) => {
   const takenUsername = await UserModel.findOne({ username });
 
   UserModel.findOne({ _id: res.locals.id }, async (err, user) => {
+    if (!username || !validator.isLength(username, { min: 3, max: 10 })) {
+      return res.render("user/settings", {
+        email: user.email,
+        imageUrl: user.imageUrl,
+        errorUsername: "Invalid username",
+      });
+    }
+
     if (takenUsername) {
       res.render("user/settings", {
         email: user.email,
@@ -54,6 +63,14 @@ exports.postEditEmail = async (req, res, next) => {
   const takenEmail = await UserModel.findOne({ email });
 
   UserModel.findOne({ _id: res.locals.id }, async (err, user) => {
+    if (!email || !validator.isEmail(email)) {
+      return res.render("user/settings", {
+        email: user.email,
+        imageUrl: user.imageUrl,
+        errorEmail: "Invalid Email",
+      });
+    }
+
     if (takenEmail) {
       res.render("user/settings", {
         email: user.email,

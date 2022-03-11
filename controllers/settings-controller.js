@@ -14,6 +14,14 @@ exports.getSettings = async (req, res, next) => {
 exports.postNewPicture = async (req, res, next) => {
   const user = await UserModel.findById({ _id: res.locals.id });
 
+  if (!req.files) {
+    return res.render("user/settings", {
+      email: user.email,
+      imageUrl: user.imageUrl,
+      errorImage: "Please choose a file",
+    });
+  }
+
   if (req.files.image) {
     const image = req.files.image;
     const filename = getUniqueFilename(image.name);

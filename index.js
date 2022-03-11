@@ -7,7 +7,7 @@ const exphbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
-const { forceAuthorize } = require("./middlewares/auth.js");
+const { forceAuthorize, forceRedirect } = require("./middlewares/auth.js");
 
 const homeRoutes = require("./routes/home-routes");
 const startRoutes = require("./routes/start-routes.js");
@@ -58,13 +58,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", forceAuthorize);
+app.get("/", forceRedirect);
 app.get("/failed", (req, res) => {
   res.send("Google login failed");
 });
 
 app.use("/start", startRoutes);
-app.use("/home", homeRoutes);
+app.use("/home", forceAuthorize, homeRoutes);
 app.use("/", googleLoginRoutes);
 
 app.use("/", (req, res) => {

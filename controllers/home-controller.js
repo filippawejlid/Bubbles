@@ -113,7 +113,7 @@ exports.postDeletePost = async (req, res, next) => {
         CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
       }
     });
-    res.redirect("/home/profile" + id);
+    res.redirect("/home/profile/" + res.locals.id);
   });
 };
 

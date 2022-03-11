@@ -76,7 +76,6 @@ exports.getEditPost = async (req, res, next) => {
   const id = req.params.id;
 
   const post = await PostsModel.findOne({ _id: id });
-  console.log(post);
 
   res.render("user/edit-post", post);
 };
@@ -128,8 +127,6 @@ exports.getUserSingle = async (req, res, next) => {
   if (res.locals.id === id) {
     loggedIn = true;
   }
-
-  console.log(loggedIn);
 
   const posts = await PostsModel.find().lean();
 

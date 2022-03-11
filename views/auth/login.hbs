@@ -2,7 +2,6 @@
 
   <div class="auth__form-wrapper">
     <h2>Login</h2>
-
     <form class="auth-form" action="/start/login" method="post">
       <div class="form-group">
         <input class="auth-input" type="text" name="username" placeholder=" " />
@@ -17,6 +16,7 @@
         />
         <span class="auth-label"><i class="fa-solid fa-lock"></i>Password</span>
       </div>
+      <p class="login__error">{{error}}</p>
       <button class="auth-btn" type="submit">Login</button>
       <a href="/google">Login with google</a>
 

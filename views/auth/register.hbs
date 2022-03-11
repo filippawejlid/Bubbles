@@ -20,10 +20,13 @@
           />
           <span class="auth-label"><i class="fa-solid fa-user"></i>
             Username</span>
+          <p class="register__error">{{error.username}}</p>
+          <p class="register__error">{{error.userExist}}</p>
         </div>
         <div class="form-group">
           <input class="auth-input" type="email" name="email" placeholder=" " />
           <span class="auth-label"><i class="fa-solid fa-at"></i> Email</span>
+          <p class="register__error">{{error.email}}</p>
         </div>
       </div>
       <div class="auth-form__wrapper">
@@ -37,6 +40,8 @@
           />
           <span class="auth-label"><i class="fa-solid fa-lock"></i>
             Password</span>
+          <p class="register__error">{{error.password}}</p>
+          <p class="register__error">{{error.passwordMatch}}</p>
         </div>
         <div class="form-group">
           <input
@@ -47,6 +52,8 @@
           />
           <span class="auth-label"><i class="fa-solid fa-lock"></i>
             Confirm password</span>
+          <p class="register__error">{{error.confirmPassword}}</p>
+          <p class="register__error">{{error.passwordMatch}}</p>
         </div>
       </div>
       <fieldset class="auth-fieldset auth-input">

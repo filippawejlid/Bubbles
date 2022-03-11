@@ -3,26 +3,50 @@ const auth = require("../middlewares/auth.js");
 const { getUniqueFilename } = require("../utils");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const validator = require("validator");
 
 exports.getRegister = (req, res, next) => {
   res.render("auth/register", { anon: "/images/avatar.png" });
 };
 
 exports.postRegister = (req, res, next) => {
+  const error = {};
+
   const { username, email, password, confirmPassword } = req.body;
+
+  if (!username || !validator.isLength(username, { min: 3, max: 10 })) {
+    error.username = "Invalid username";
+  }
+
+  if (!email || !validator.isEmail(email)) {
+    error.email = "Invalid email";
+  }
+
+  if (!password || password.length < 3) {
+    error.password = "Invalid password";
+  }
+
+  if (!confirmPassword) {
+    error.confirmPassword = "Invalid password";
+  }
+
+  if (Object.keys(error).length !== 0) {
+    return res.render("auth/register", { error, anon: "/images/avatar.png" });
+  }
 
   UserModel.findOne({ username }, async (err, user) => {
     if (user) {
-      res.send("username in use");
+      error.userExist = "Username already exist";
+      return res.render("auth/register", { error, anon: "/images/avatar.png" });
     } else if (password !== confirmPassword) {
-      res.send("Incorrect password");
+      error.passwordMatch = "Passwords don't match";
+      return res.render("auth/register", { error, anon: "/images/avatar.png" });
     } else {
       const newUser = new UserModel({
         username,
         email,
         password: auth.hashPassword(password),
       });
-
       if (req.files && req.files.image) {
         const image = req.files.image;
         const filename = getUniqueFilename(image.name);
@@ -30,11 +54,9 @@ exports.postRegister = (req, res, next) => {
         await image.mv(uploadPath);
         newUser.imageUrl = "/uploads/" + filename;
       }
-
       await newUser.save();
       const userData = { userId: newUser._id.toString(), username };
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
-
       res.cookie("token", accessToken);
       res.redirect("/");
     }
@@ -56,7 +78,7 @@ exports.postLogin = (req, res, next) => {
       res.cookie("token", accessToken);
       res.redirect("/");
     } else {
-      res.send("login failed");
+      res.render("auth/login", { error: "Wrong username or password" });
     }
   });
 };

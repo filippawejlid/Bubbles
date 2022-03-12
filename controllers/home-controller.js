@@ -76,10 +76,13 @@ exports.getEditPost = async (req, res, next) => {
   const id = req.params.id;
 
   const post = await PostsModel.findOne({ _id: id });
-  console.log(post.postedBy, res.locals.id);
+
   if (post.postedBy.toString() === res.locals.id) {
     res.render("user/edit-post", post);
-  } else next();
+  } else {
+    res.sendStatus(403);
+    res.redirect("/");
+  }
 };
 
 exports.postEditPost = async (req, res, next) => {
@@ -91,20 +94,20 @@ exports.postEditPost = async (req, res, next) => {
     content: req.body.content,
     time: Date.now(),
   };
-
-  if (
-    validatePost(post) &&
-    originalPost.postedBy.toString() === res.locals.id
-  ) {
-    PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
-      res.redirect("/home/profile/" + originalPost.postedBy);
-    });
+  if (originalPost.postedBy.toString() === res.locals.id) {
+    if (validatePost(post)) {
+      PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
+        res.redirect("/home/profile/" + originalPost.postedBy);
+      });
+    } else {
+      res.render("user/edit-post", {
+        error: "Du måste skriva något",
+        content: originalPost.content,
+        _id: originalPost._id,
+      });
+    }
   } else {
-    res.render("user/edit-post", {
-      error: "Du måste skriva något",
-      content: originalPost.content,
-      _id: originalPost._id,
-    });
+    res.sendStatus(403);
   }
 };
 

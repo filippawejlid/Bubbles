@@ -1,10 +1,14 @@
-<h2>Confirm deletion</h2>
+<div class="delete-comment">
+  <h2>Confirm deletion</h2>
 
-<p>Would you like to delete the following comment?</p>
+  <p>Would you like to delete the following comment?</p>
 
-<p><b>{{text}}</b></p>
+  <p><b>{{text}}</b></p>
 
-<a href="/home">NO</a>
-<form action="/home/delete-comment/{{_id}}" method="post">
-  <input type="submit" value="YES" />
-</form>
+  <div class="btn-wrapper">
+    <a class="cancel-btn" href="/home/posts/{{originalPost}}">NO</a>
+    <form action="/home/delete-comment/{{_id}}" method="post">
+      <input class="save-btn" type="submit" value="YES" />
+    </form>
+  </div>
+</div>

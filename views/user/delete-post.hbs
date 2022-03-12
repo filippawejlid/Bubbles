@@ -1,0 +1,14 @@
+<div class="delete-resource">
+  <h2>Confirm deletion</h2>
+
+  <p>Would you like to delete the following post?</p>
+
+  <p><b>{{content}}</b></p>
+
+  <div class="btn-wrapper">
+    <a class="cancel-btn" href="/home/posts/{{_id}}">NO</a>
+    <form action="/home/delete-post/{{this._id}}" method="post">
+      <input class="save-btn" type="submit" value="YES" />
+    </form>
+  </div>
+</div>

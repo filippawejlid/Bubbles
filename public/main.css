@@ -443,7 +443,7 @@ nav > a {
 /*EDIT/DELETE STYLES*/
 
 .edit-post,
-.delete-comment {
+.delete-resource {
   margin-top: 20vh;
   display: flex;
   flex-direction: column;

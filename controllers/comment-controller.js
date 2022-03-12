@@ -81,20 +81,22 @@ exports.postEditComment = async (req, res, next) => {
   }
 };
 
-exports.getDeleteComment = async (req, res, next) => {
+exports.getDeleteComment = async (req, res) => {
   const id = req.params.id;
 
   const comment = await CommentsModel.findOne({ _id: id });
-
-  res.render("user/delete-comment", comment);
+  if (comment.postedBy.toString() === res.locals.id) {
+    res.render("user/delete-comment", comment);
+  } else res.sendStatus(403);
 };
 
 exports.postDeleteComment = async (req, res, next) => {
   const id = req.params.id;
 
   const comment = await CommentsModel.findOne({ _id: id });
-
-  CommentsModel.deleteOne({ _id: id }, (err, result) => {
-    res.redirect("/home/posts/" + comment.originalPost);
-  });
+  if (comment.postedBy.toString() === res.locals.id) {
+    CommentsModel.deleteOne({ _id: id }, (err, result) => {
+      res.redirect("/home/posts/" + comment.originalPost);
+    });
+  } else res.sendStatus(403);
 };

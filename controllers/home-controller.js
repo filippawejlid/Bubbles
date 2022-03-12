@@ -79,10 +79,7 @@ exports.getEditPost = async (req, res, next) => {
 
   if (post.postedBy.toString() === res.locals.id) {
     res.render("user/edit-post", post);
-  } else {
-    res.sendStatus(403);
-    res.redirect("/");
-  }
+  } else res.sendStatus(403);
 };
 
 exports.postEditPost = async (req, res, next) => {
@@ -111,19 +108,30 @@ exports.postEditPost = async (req, res, next) => {
   }
 };
 
+exports.getDeletePost = async (req, res) => {
+  const id = req.params.id;
+
+  const post = await PostsModel.findOne({ _id: id });
+  if (post.postedBy.toString() === res.locals.id) {
+    res.render("user/delete-post", post);
+  } else res.sendStatus(403);
+};
+
 exports.postDeletePost = async (req, res, next) => {
   const id = req.params.id;
   const originalPost = await PostsModel.findOne({ _id: id });
 
-  PostsModel.deleteOne({ _id: id }, async (err, result) => {
-    const comments = await CommentsModel.find();
-    comments.forEach((comment) => {
-      if (comment.originalPost == id.toString()) {
-        CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
-      }
+  if (originalPost.postedBy.toString() === res.locals.id) {
+    PostsModel.deleteOne({ _id: id }, async (err, result) => {
+      const comments = await CommentsModel.find();
+      comments.forEach((comment) => {
+        if (comment.originalPost == id.toString()) {
+          CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
+        }
+      });
+      res.redirect("/home/profile/" + originalPost.postedBy);
     });
-    res.redirect("/home/profile/" + originalPost.postedBy);
-  });
+  } else res.sendStatus(403);
 };
 
 exports.getUserSingle = async (req, res, next) => {

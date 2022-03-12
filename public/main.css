@@ -38,6 +38,14 @@ p {
   object-fit: cover;
   object-position: center;
 }
+a {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  transition: 0.3s;
+  color: rgba(29, 29, 29, 0.774);
+}
 
 /* HEADER + NAV STYLES */
 
@@ -65,40 +73,15 @@ nav > a {
   position: relative;
 }
 
-/* Styles for dropdown (if we want it) */
-
-/* .dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropbtn {
-  background-color: #fff;
+.dropdown-toggle {
   border: none;
+  background-color: white;
 }
 
-.dropdown-content__inner {
+.dropdown-menu.show {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
 }
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 40px;
-  left: -30px;
-  min-width: 100px;
-  z-index: 1;
-  border: 1px solid #e3e3e3;
-  border-radius: 5px;
-}
-
-.dropbtn:focus + .dropdown-content {
-  display: block;
-} */
 
 /* LOGIN + REGISTER STYLES */
 
@@ -227,6 +210,19 @@ nav > a {
   gap: 3rem;
 }
 
+.register__error {
+  margin-top: 10px;
+  text-align: center;
+  color: red;
+  font-size: 12px;
+}
+
+.login__error {
+  text-align: center;
+  color: red;
+  font-size: 14px;
+}
+
 /* HOME STYLES */
 
 .form-wrapper {
@@ -234,6 +230,7 @@ nav > a {
   align-items: center;
   justify-content: center;
   padding-bottom: 3rem;
+  margin-top: 50px;
 }
 
 .home-form {
@@ -291,6 +288,10 @@ nav > a {
   overflow: hidden;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
   background-image: url("/images/thought_bubble.png");
+}
+
+.author {
+  font-weight: 300;
 }
 
 .post__info__author {
@@ -385,7 +386,7 @@ nav > a {
   border-radius: 5px;
 }
 
-.comments-wrapper {
+.comments-wrapper{
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -397,6 +398,7 @@ nav > a {
   display: flex;
   flex-direction: column;
 }
+
 
 .comment__info {
   display: flex;
@@ -493,13 +495,6 @@ nav > a {
   color: #fff;
 }
 
-/* SINGLE USER */
-
-.profile__info > .round-img-container {
-  width: 300px;
-  height: 300px;
-}
-
 /* NOT FOUND */
 .not-found {
   width: 500px;
@@ -530,4 +525,194 @@ nav > a {
   .not-found {
     width: 600px;
   }
+}
+
+/* Settings */
+
+.settings {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings__container {
+  border: 2px solid #e3e3e3;
+  padding: 3rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.change-username h3,
+.change-email h3,
+.change-image h3 {
+  font-size: 20px;
+}
+
+.change-image {
+  /* background-color: pink; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.change-image form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.change-image form fieldset {
+  border: none;
+}
+
+.change-image button {
+  /* margin-top: 5px; */
+  border: none;
+  padding: 5px 80px;
+  background-color: #1da1f2;
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+.change-image button:hover {
+  background-color: #1b8cd3;
+}
+
+.edit-userInfo {
+  display: flex;
+  gap: 2rem;
+}
+
+.change-username input,
+.change-email input {
+  border: 1px solid #bebebe;
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+}
+
+.change-username button,
+.change-email button {
+  border: none;
+  padding: 5px 15px;
+  background-color: #1da1f2;
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+.change-username button:hover,
+.change-email button:hover {
+  background-color: #1b8cd3;
+}
+
+.settings__error {
+  font-size: 14px;
+  color: red;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* USER PAGE */
+
+.user-profile {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  background: #3a7ca4;
+  background: -webkit-linear-gradient(top left, #3a7ca4, #40b0a7);
+  background: -moz-linear-gradient(top left, #3a7ca4, #40b0a7);
+  background: linear-gradient(to bottom right, #3a7ca4, #40b0a7);
+}
+
+.profile__info > .round-img-container {
+  width: 200px;
+  height: 200px;
+}
+
+.profile__info {
+  width: 500px;
+  border-radius: 5px 5px 0 0;
+  background-color: #ffffff;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__info > h2 {
+  font-weight: 200;
+  padding: 5px;
+}
+
+.interactions {
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.interactions > p {
+  font-weight: 300;
+}
+
+.user-post-section {
+  background-color: white;
+  width: 500px;
+  border-radius: 0 0 5px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-post {
+  width: 400px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  border: 1px solid #b3b3b3;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.user-post__info {
+  text-align: end;
+  color: #00000069;
+  padding: 5px;
+}
+
+.user-post__content {
+  padding: 15px;
+  word-wrap: break-word;
+}
+
+.user-post__edit {
+  display: flex;
+  justify-content: end;
+}
+
+.user-post__edit__btns {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100px;
+  padding: 10px 2rem;
+  border-radius: 5px;
+  border-top: 1px solid #b3b3b3;
+  border-left: 1px solid #b3b3b3;
+  border-radius: 0;
+  border-top-left-radius: 20px;
+  transition: all 0.2s;
+}
+
+.user-post__edit button {
+  border: none;
+  background-color: inherit;
 }

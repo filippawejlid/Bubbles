@@ -15,10 +15,26 @@ const forceAuthorize = (req, res, next) => {
   const { token } = req.cookies;
 
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
+    // res.redirect("/home");
+    next();
+  } else {
+    res.redirect("/start/login");
+  }
+};
+
+const forceRedirect = (req, res, next) => {
+  const { token } = req.cookies;
+
+  if (token && jwt.verify(token, process.env.JWTSECRET)) {
     res.redirect("/home");
   } else {
     res.redirect("/start/login");
   }
 };
 
-module.exports = { forceAuthorize, hashPassword, comparePassword };
+module.exports = {
+  forceAuthorize,
+  forceRedirect,
+  hashPassword,
+  comparePassword,
+};

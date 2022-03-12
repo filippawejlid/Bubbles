@@ -7,11 +7,51 @@
     <h2>
       {{userName}}
     </h2>
+    <div class="interactions">
+      <p>
+        <p>752</p>
+        <p>Followers</p>
+      </p>
+      <p>
+        <i class="fa-solid fa-users"></i>
+      </p>
+      <p>
+        <p>543</p>
+        <p>Following</p>
+      </p>
+    </div>
   </div>
 
   <div class="user-post-section">
 
     {{#if loggedIn}}
+      {{#each userPosts}}
+
+        <div class="user-post">
+          <div class="user-post__info">
+            <span class="time">{{formatDate createdAt}}</span>
+          </div>
+          <div class="user-post__content">
+            <p>{{content}}</p>
+          </div>
+          <div class="user-post__edit">
+            <div class="user-post__edit__btns">
+
+              <a href="/home/edit-post/{{_id}}">
+                <i class="fa-solid fa-pen"></i>
+              </a>
+              <form action="/home/delete-post/{{_id}}" method="post">
+
+                <button type="submit">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      {{/each}}
+    {{else}}
       {{#each userPosts}}
 
         <div class="user-post">
@@ -21,61 +61,11 @@
           <div class="user-post__info">
             <span class="time">{{formatDate createdAt}}</span>
           </div>
-          <div class="single-post__thred-btn__inner">
-            <a href="/home/edit-post/{{_id}}">
-              <i class="fa-solid fa-pen"></i>
-            </a>
-            <form action="/home/delete-post/{{_id}}" method="post">
-
-              <button type="submit">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-            </form>
-          </div>
         </div>
       {{/each}}
-    {{else}}
-
-      <div class="user-post">
-        <div class="user-post__content">
-          <p>{{content}}</p>
-        </div>
-        <div class="user-post__info">
-          <span class="time">{{formatDate createdAt}}</span>
-        </div>
-      </div>
 
     {{/if}}
 
   </div>
 
 </div>
-
-{{!-- 
-{{#each userPosts}}
-
-      <div class="user-post">
-        <div class="user-post__content">
-          <p>{{content}}</p>
-        </div>
-        <div class="user-post__info">
-          <span class="time">{{formatDate createdAt}}</span>
-        </div>
-
-        {{#if loggedIn}}
-          <div class="single-post__thred-btn__inner">
-            <a href="/user/edit-post/{{_id}}">
-              <i class="fa-solid fa-pen"></i>
-            </a>
-            <form action="/user/delete-post/{{_id}}" method="post">
-
-              <button type="submit">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-            </form>
-          </div>
-        {{/if}}
-
-      </div>
-
-    {{/each}} --}}

@@ -131,7 +131,9 @@ exports.postDeletePost = async (req, res, next) => {
       });
       res.redirect("/home/profile/" + originalPost.postedBy);
     });
+
   } else res.sendStatus(403);
+
 };
 
 exports.getUserSingle = async (req, res, next) => {

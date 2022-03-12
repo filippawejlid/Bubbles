@@ -1,5 +1,6 @@
 <section class="post-section">
-  <div class="post">
+  
+    <div class="post">
     <div class="post__info">
       <div class="post__info__author">
         <div class="round-img-container">
@@ -21,12 +22,9 @@
           <a href="/home/edit-post/{{myPostId}}">
             <i class="fa-solid fa-pen"></i>
           </a>
-          <form action="/home/delete-post/{{myPostId}}" method="post">
-
-            <button type="submit">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </form>
+          <a href="/home/delete-post/{{myPostId}}">
+          <i class="fa-solid fa-trash-can"></i>
+          </a>
         </div>
 
       {{/if}}
@@ -65,7 +63,7 @@
 
         {{#allowEdit this.postedBy._id ../user}}
 
-          <div class="single-post__thread-btn">
+          <div class="single-post__comment-thread-btn">
             <div class="single-post__thred-btn__inner">
               <a href="/home/edit-comment/{{../this._id}}"><i
                   class="fa-solid fa-pen"

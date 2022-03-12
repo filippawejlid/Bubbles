@@ -1,9 +1,16 @@
-<h2>Redigera inlägg</h2>
-
 <div class="edit-post">
+  <h2>Edit comment</h2>
   {{error}}
   <form action="/home/edit-comment/{{_id}}" method="post">
-    <textarea name="text" cols="30" rows="10">{{text}}</textarea>
-    <input type="submit" value="Spara" />
+    <textarea
+      class="home-form__textarea"
+      name="text"
+      cols="30"
+      rows="10"
+    >{{text}}</textarea>
+    <div class="btn-wrapper">
+      <a class="cancel-btn" href="/home/posts/{{originalPost}}">Cancel</a>
+      <input class="save-btn" type="submit" value="Save" />
+    </div>
   </form>
 </div>

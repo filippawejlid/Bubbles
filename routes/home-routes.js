@@ -15,6 +15,8 @@ router.get("/edit-post/:id", homeController.getEditPost);
 
 router.post("/edit-post/:id", homeController.postEditPost);
 
+router.get("/delete-post/:id", homeController.getDeletePost);
+
 router.post("/delete-post/:id", homeController.postDeletePost);
 
 router.get("/profile/:id", homeController.getUserSingle);

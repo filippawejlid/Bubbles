@@ -41,7 +41,15 @@ exports.getEditComment = async (req, res, next) => {
 
   const comment = await CommentsModel.findOne({ _id: id });
 
-  res.render("user/edit-comment", comment);
+  if (comment.postedBy.toString() === res.locals.id) {
+    res.render("user/edit-comment", {
+      _id: comment._id.toString(),
+      text: comment.text,
+      originalPost: comment.originalPost.toString(),
+    });
+  } else {
+    res.sendStatus(403);
+  }
 };
 
 exports.postEditComment = async (req, res, next) => {
@@ -52,37 +60,43 @@ exports.postEditComment = async (req, res, next) => {
   const updatedComment = {
     text: req.body.text,
   };
-
-  if (validateComment(updatedComment)) {
-    CommentsModel.updateOne(
-      { _id: id },
-      { $set: updatedComment },
-      (err, result) => {
-        res.redirect("/home/posts/" + comment.originalPost);
-      }
-    );
+  if (comment.postedBy.toString() === res.locals.id) {
+    if (validateComment(updatedComment)) {
+      CommentsModel.updateOne(
+        { _id: id },
+        { $set: updatedComment },
+        (err, result) => {
+          res.redirect("/home/posts/" + comment.originalPost);
+        }
+      );
+    } else {
+      res.render("user/edit-comment", {
+        error: "No input detected",
+        text: comment.text,
+      });
+    }
   } else {
-    res.render("user/edit-comment", {
-      error: "No input detected",
-      text: comment.text,
-    });
+    res.sendStatus(403);
+    res.redirect("/");
   }
 };
 
-exports.getDeleteComment = async (req, res, next) => {
+exports.getDeleteComment = async (req, res) => {
   const id = req.params.id;
 
   const comment = await CommentsModel.findOne({ _id: id });
-
-  res.render("user/delete-comment", comment);
+  if (comment.postedBy.toString() === res.locals.id) {
+    res.render("user/delete-comment", comment);
+  } else res.sendStatus(403);
 };
 
 exports.postDeleteComment = async (req, res, next) => {
   const id = req.params.id;
 
   const comment = await CommentsModel.findOne({ _id: id });
-
-  CommentsModel.deleteOne({ _id: id }, (err, result) => {
-    res.redirect("/home/posts/" + comment.originalPost);
-  });
+  if (comment.postedBy.toString() === res.locals.id) {
+    CommentsModel.deleteOne({ _id: id }, (err, result) => {
+      res.redirect("/home/posts/" + comment.originalPost);
+    });
+  } else res.sendStatus(403);
 };

@@ -77,7 +77,9 @@ exports.getEditPost = async (req, res, next) => {
 
   const post = await PostsModel.findOne({ _id: id });
 
-  res.render("user/edit-post", post);
+  if (post.postedBy.toString() === res.locals.id) {
+    res.render("user/edit-post", post);
+  } else res.sendStatus(403);
 };
 
 exports.postEditPost = async (req, res, next) => {
@@ -89,32 +91,49 @@ exports.postEditPost = async (req, res, next) => {
     content: req.body.content,
     time: Date.now(),
   };
-
-  if (validatePost(post)) {
-    PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
-      res.redirect("/home/profile/" + originalPost.postedBy);
-    });
+  if (originalPost.postedBy.toString() === res.locals.id) {
+    if (validatePost(post)) {
+      PostsModel.updateOne({ _id: id }, { $set: post }, (err, result) => {
+        res.redirect("/home/profile/" + originalPost.postedBy);
+      });
+    } else {
+      res.render("user/edit-post", {
+        error: "Du måste skriva något",
+        content: originalPost.content,
+        _id: originalPost._id,
+      });
+    }
   } else {
-    res.render("user/edit-post", {
-      error: "Du måste skriva något",
-      content: originalPost.content,
-      _id: originalPost._id,
-    });
+    res.sendStatus(403);
   }
+};
+
+exports.getDeletePost = async (req, res) => {
+  const id = req.params.id;
+
+  const post = await PostsModel.findOne({ _id: id });
+  if (post.postedBy.toString() === res.locals.id) {
+    res.render("user/delete-post", post);
+  } else res.sendStatus(403);
 };
 
 exports.postDeletePost = async (req, res, next) => {
   const id = req.params.id;
+  const originalPost = await PostsModel.findOne({ _id: id });
 
-  PostsModel.deleteOne({ _id: id }, async (err, result) => {
-    const comments = await CommentsModel.find();
-    comments.forEach((comment) => {
-      if (comment.originalPost == id.toString()) {
-        CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
-      }
+  if (originalPost.postedBy.toString() === res.locals.id) {
+    PostsModel.deleteOne({ _id: id }, async (err, result) => {
+      const comments = await CommentsModel.find();
+      comments.forEach((comment) => {
+        if (comment.originalPost == id.toString()) {
+          CommentsModel.deleteOne({ _id: comment._id }, (err, result) => {});
+        }
+      });
+      res.redirect("/home/profile/" + originalPost.postedBy);
     });
-    res.redirect("/home/profile/" + res.locals.id);
-  });
+
+  } else res.sendStatus(403);
+
 };
 
 exports.getUserSingle = async (req, res, next) => {
